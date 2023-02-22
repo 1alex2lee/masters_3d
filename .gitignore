@@ -2,3 +2,12 @@
 /.ropeproject
 /3d_viewer.pyproject.user
 /__pycache__
+models/Car Door Panel/.DS_Store
+models/Car Door Panel/Aluminium Alloy 5754/Displacement
+models/Car Door Panel/Aluminium Alloy 5754/Springback
+models/Car Door Panel/Aluminium Alloy 5754/Thinning
+models/U-bending/.DS_Store
+models/U-bending/Aluminium Alloy 5754/Displacement
+models/U-bending/Aluminium Alloy 5754/Springback
+models/U-bending/Aluminium Alloy 5754/Thinning
+python/__pycache__/model_control.cpython-39.pyc
