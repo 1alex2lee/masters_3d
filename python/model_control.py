@@ -1,4 +1,4 @@
-import torch, os
+import torch, os, time
 import numpy as np
 
 from python.model_architecture import ResUNet
@@ -41,3 +41,18 @@ def predict(input):
     decoded = model(input)
 
     return decoded.cpu().detach().numpy().reshape(2,256,384)
+
+
+def train (epochs):
+    global progress
+
+
+
+
+def begin_training (window, name, material, target, epochs, batch_size, input_dir, output_dir):
+    progress = 0
+    while True:
+        time.sleep(1)
+        window.
+    
+
