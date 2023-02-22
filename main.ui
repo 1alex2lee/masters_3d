@@ -192,7 +192,7 @@
     </property>
     <addaction name="actionOptimisation_Mode"/>
     <addaction name="actionSensitiity_Mode"/>
-    <addaction name="actionDeveloper"/>
+    <addaction name="action_developer"/>
    </widget>
    <widget class="QMenu" name="menuExit">
     <property name="title">
@@ -219,7 +219,7 @@
     <string>Sensitiity Analysis</string>
    </property>
   </action>
-  <action name="actionDeveloper">
+  <action name="action_developer">
    <property name="text">
     <string>Developer</string>
    </property>
