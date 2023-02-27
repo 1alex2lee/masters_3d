@@ -1,4 +1,4 @@
-import json
+import json, os
 
 from python import die, model_control
 
@@ -9,29 +9,22 @@ def predictionmesh (die_dir, edge_dir, blank_dir, qml):
     # print(blank_dir)
     die.load(die_dir, edge_dir, blank_dir, qml)
 
-def materials ():
-    with open('info.json') as f:
-        info = json.load(f)
-
-        return info["materials"]
-
 
 def processes ():
-    with open('info.json') as f:
-        info = json.load(f)
-
-        return [ process["name"] for process in info["processes"] ]
+    return [ process for process in os.listdir("models") ]
 
 
-def modeltypes ():
-    global selected_process
+def materials (process):
+    # materials = []
+    # for material in os.listdir(os.path.join("models", process)):
+    #     if material[0] != ".":
+    #         materials.append(material)
+    # return materials
+    return [ material for material in os.listdir(os.path.join("models", process)) if material[0] != "." ]
 
-    with open('info.json') as f:
-        info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_process:
-                return process["models"]
+def modeltypes (process, material):
+    return [ model for model in os.listdir(os.path.join("models", process, material))]
 
 
 def process_inputs ():
