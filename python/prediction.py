@@ -8,7 +8,7 @@ from scipy.interpolate import griddata
 from python import model_control, load
 
 
-def load_mesh (file, window):
+def load_mesh (file):
     print(file)
     stl = mesh.Mesh.from_file(file)
     points = stl.points.reshape(-1,3)
