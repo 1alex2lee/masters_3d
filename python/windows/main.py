@@ -10,7 +10,7 @@ from stl import mesh
 import numpy as np
 
 from python import load, model_control, prediction
-from windows.developer import DeveloperWindow
+from python.windows import developer
 
 class MainWindow(QMainWindow):
 # class MainWindow (QUiLoader):
@@ -57,19 +57,20 @@ class MainWindow(QMainWindow):
 
     def load_mesh (self):
         file = QFileDialog.getOpenFileName(self, "Import Mesh", filter="*.stl")
-        points, faces = prediction.load_mesh(file[0], self)
+        points, faces = prediction.load_mesh(file[0])
 
         # mesh_data = MeshData(vertexes=points, faces=faces)
         # m = GLMeshItem(meshdata=mesh_data, smooth=True, drawFaces=False, drawEdges=True, edgeColor=(0, 1, 0, 1))
         # self.main_view.addItem(m)
 
-        stl_mesh = mesh.Mesh.from_file('temp/b_pillar.stl')
-        points = stl_mesh.points.reshape(-1, 3)
-        faces = np.arange(points.shape[0]).reshape(-1, 3)
+        # stl_mesh = mesh.Mesh.from_file('temp/b_pillar.stl')
+        # points = stl_mesh.points.reshape(-1, 3)
+        # faces = np.arange(points.shape[0]).reshape(-1, 3)
+
         mesh_data = MeshData(vertexes=points, faces=faces)
         m = GLMeshItem(meshdata=mesh_data, smooth=True, drawFaces=False, drawEdges=True, edgeColor=(0, 1, 0, 1))
         self.main_view.addItem(m)
 
     def open_developer_window (self):
-        self.developer_window = DeveloperWindow()
+        self.developer_window = developer.DeveloperWindow()
         self.developer_window.show()
