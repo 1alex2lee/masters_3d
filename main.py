@@ -14,17 +14,17 @@ from stl import mesh
 import numpy as np
 
 from python import load, model_control, prediction
-from windows.train_new import TrainNewWindow
-from windows.developer import DeveloperWindow
-from windows.main import MainWindow
-
+from python.windows import main
+from python.windows import developer
+from python.windows import optimisation
 
 if __name__ == '__main__':
     # app = QtWidgets.QApplication(sys.argv)
     app = QApplication(sys.argv)
-    # main = MainWindow()/
-    # main = DeveloperWindow()
-    main = TrainNewWindow()
+    # main = main,MainWindow()
+    # main = developer.DeveloperWindow()
+    # main = developer.TrainNewWindow()
+    main = optimisation.SetupWindow()
     
     # input = np.load("temp/input.npy")
     # output = np.load("temp/output.npy")
