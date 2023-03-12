@@ -11,7 +11,7 @@ def predictionmesh (die_dir, edge_dir, blank_dir, qml):
 
 
 def processes ():
-    return [ process for process in os.listdir("models") ]
+    return [ process for process in os.listdir("models") if process[0] != "."  ]
 
 
 def materials (process):
@@ -23,8 +23,8 @@ def materials (process):
     return [ material for material in os.listdir(os.path.join("models", process)) if material[0] != "." ]
 
 
-def modeltypes (process, material):
-    return [ model for model in os.listdir(os.path.join("models", process, material))]
+def models (process, material):
+    return [ model for model in os.listdir(os.path.join("models", process, material)) if model[0] != "." ]
 
 
 def process_inputs ():
