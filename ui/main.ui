@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1174</width>
+    <width>1246</width>
     <height>895</height>
    </rect>
   </property>
@@ -41,62 +41,31 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
-      <item row="0" column="3">
-       <widget class="QRadioButton" name="springback_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Springback</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QRadioButton" name="strain_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Major Strain</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="material_label">
-        <property name="text">
-         <string>Material</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2" colspan="3">
-       <widget class="QLabel" name="selected_label">
+      <item row="2" column="0">
+       <widget class="QLabel" name="model_label">
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>24</height>
+          <width>100</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="text">
-         <string>No model selected</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="process_label">
-        <property name="text">
-         <string>Process</string>
+         <string>Model</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QPushButton" name="load_mesh_button">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Load New Mesh</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="model_dropdown"/>
       </item>
       <item row="4" column="0" colspan="2">
        <widget class="QTreeView" name="dir_tree">
@@ -111,46 +80,60 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="material_dropdown"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QRadioButton" name="thinning_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
+      <item row="1" column="0">
+       <widget class="QLabel" name="material_label">
         <property name="text">
-         <string>Thinning</string>
+         <string>Material</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="process_dropdown"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="slider_label">
-        <property name="text">
-         <string>Slider Placeholder</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2" rowspan="3" colspan="3">
+      <item row="0" column="2" rowspan="5">
        <widget class="GLViewWidget" name="main_view" native="true">
         <property name="enabled">
          <bool>true</bool>
         </property>
         <property name="minimumSize">
          <size>
-          <width>900</width>
+          <width>300</width>
           <height>0</height>
          </size>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QSlider" name="slider">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="material_dropdown">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="process_label">
+        <property name="text">
+         <string>Process</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="process_dropdown">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3" rowspan="5">
+       <widget class="GraphicsLayoutWidget" name="GraphicsLayoutWidget" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -235,6 +218,12 @@
    <class>GLViewWidget</class>
    <extends>QWidget</extends>
    <header>pyqtgraph.opengl</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GraphicsLayoutWidget</class>
+   <extends>QWidget</extends>
+   <header>pyqtgraph</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
