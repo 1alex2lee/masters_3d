@@ -61,13 +61,13 @@ class BasicBlock(nn.Module):
 
 class ResUNet(torch.nn.Module):
 
-    def __init__(self,num_channel,batch_size):
+    def __init__(self,num_channel, batch_size, downscale_in, updown_out_1, updown_out_2):
         super(ResUNet, self).__init__()
 
         ### ENCODER
 
         self.downscale=nn.Sequential(
-            torch.nn.Conv2d(in_channels=5,
+            torch.nn.Conv2d(in_channels=downscale_in,
                            out_channels=num_channel[0],
                            kernel_size=(9,9),
                            stride=(1,1),
@@ -229,17 +229,17 @@ class ResUNet(torch.nn.Module):
 
         self.updown=nn.Sequential(
             torch.nn.Conv2d(in_channels=num_channel[1],
-                                     out_channels=4,
+                                     out_channels=updown_out_1,
                                      kernel_size=(9, 9),
                                      stride=(1, 1),
                                      padding=4),
 
-            nn.BatchNorm2d(4),
+            nn.BatchNorm2d(updown_out_1),
 
             nn.ReLU(),
 
-            torch.nn.Conv2d(in_channels=4,
-                                     out_channels=2,
+            torch.nn.Conv2d(in_channels=updown_out_1,
+                                     out_channels=updown_out_2,
                                      kernel_size=(9, 9),
                                      stride=(1, 1),
                                      padding=4)
@@ -260,6 +260,7 @@ class ResUNet(torch.nn.Module):
 
         ### ENCODER
         encoded0 = self.downscale(x)
+
         encoded1 = self.encoder_layer1(encoded0)
         encoded2 = self.encoder_layer2(encoded1)
         encoded3 = self.encoder_layer3(encoded2)
@@ -268,21 +269,28 @@ class ResUNet(torch.nn.Module):
         encoded6 = self.encoder_layer6(encoded5)
 
         ### RESBLOCKS
+
         res=self.res_layer(encoded6)
 
         ### DECODER
         decoded = torch.cat((res,encoded6),1)
         decoded = self.decoder_layer6(decoded)
+
         decoded = torch.cat((decoded,encoded5),1)
         decoded = self.decoder_layer5(decoded)
+
         decoded = torch.cat((decoded,encoded4),1)
         decoded = self.decoder_layer4(decoded)
+
         decoded = torch.cat((decoded,encoded3),1)
         decoded = self.decoder_layer3(decoded)
+
         decoded = torch.cat((decoded,encoded2),1)
         decoded = self.decoder_layer2(decoded)
+
         decoded = torch.cat((decoded,encoded1),1)
         decoded = self.decoder_layer1(decoded)
+
         decoded = torch.cat((decoded,encoded0),1)
         decoded = self.updown(decoded)
 
