@@ -21,10 +21,10 @@ from python.windows import optimisation
 if __name__ == '__main__':
     # app = QtWidgets.QApplication(sys.argv)
     app = QApplication(sys.argv)
-    # main = main,MainWindow()
+    main = main.MainWindow()
     # main = developer.DeveloperWindow()
     # main = developer.TrainNewWindow()
-    main = optimisation.SetupWindow()
+    # main = optimisation.SetupWindow()
     
     # input = np.load("temp/input.npy")
     # output = np.load("temp/output.npy")
