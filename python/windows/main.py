@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
         self.material_dropdown.currentTextChanged.connect(lambda: self.model_dropdown.addItems(load.models(self.process_dropdown.currentText(), self.material_dropdown.currentText())))
         self.model_dropdown.currentTextChanged.connect(lambda: self.select_model())
 
+        self.direction_dropdown.addItems(["X","Y","Z","Total"])
+        self.direction_dropdown.currentTextChanged.connect(lambda: self.change_direction())
+
         self.action_developer.triggered.connect(lambda: self.open_developer_window())
 
         # self.main_view.pan(385, 468, 198)
@@ -45,12 +48,19 @@ class MainWindow(QMainWindow):
         # v = self.GraphicsLayoutWidget.addViewBox(row=1, col=0, colspan=2)
 
     def select_model (self):
-        # model_control.load_model(self.process_dropdown.currentText(),self.material_dropdown.currentText(),self.model_dropdown.currentText())
+        if self.model_dropdown.currentText() == "Displacement":
+            self.direction_dropdown.setEnabled(True)
+        else:
+            self.direction_dropdown.setEnabled(False)
         self.load_mesh_button.setEnabled(True)
         prediction.change_model(self)
 
+
+    def change_direction (self):
+        prediction.plot_displacement(self)
+
     def load_mesh (self):
-        file = QFileDialog.getOpenFileName(self, "Import Mesh", filter="*.stl")
+        file = QFileDialog.getOpenFileName(self, "Import Mesh", filter="STL file (*.stl);; STEP file (*.step)")
         prediction.load_mesh(file[0], self)
 
     def open_developer_window (self):
