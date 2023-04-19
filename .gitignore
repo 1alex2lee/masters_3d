@@ -3,13 +3,7 @@
 /3d_viewer.pyproject.user
 /__pycache__
 models/Car Door Panel/.DS_Store
-models/Car Door Panel/Aluminium Alloy 5754/Displacement
-models/Car Door Panel/Aluminium Alloy 5754/Springback
-models/Car Door Panel/Aluminium Alloy 5754/Thinning
 models/U-bending/.DS_Store
-models/U-bending/Aluminium Alloy 5754/Displacement
-models/U-bending/Aluminium Alloy 5754/Springback
-models/U-bending/Aluminium Alloy 5754/Thinning
 python/__pycache__/model_control.cpython-39.pyc
 python/windows/__pycache__/developer.cpython-39.pyc
 python/windows/__pycache__/main.cpython-39.pyc
@@ -17,13 +11,11 @@ python/windows/__pycache__/optimisation.cpython-39.pyc
 python/windows/__pycache__/train_new.cpython-39.pyc
 python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
-.gitignore
 python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
 .gitignore
 ui/.DS_Store
 /python/__pycache__
-/ui
 python/__pycache__/load.cpython-39.pyc
 python/__pycache__/model_architecture.cpython-39.pyc
 python/__pycache__/model_control.cpython-39.pyc
