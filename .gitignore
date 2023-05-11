@@ -20,3 +20,42 @@ python/__pycache__/load.cpython-39.pyc
 python/__pycache__/model_architecture.cpython-39.pyc
 python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
+components/.DS_Store
+components/Bulkhead/.DS_Store
+components/Bulkhead/HFQ/.DS_Store
+components/Bulkhead/HFQ/Aluminium Alloy 6082/.DS_Store
+components/Car Door Panel/.DS_Store
+components/Car Door Panel/Cold Stamping/.DS_Store
+components/Car Door Panel/Cold Stamping/Aluminium Alloy 5754/.DS_Store
+components/U-bending/.DS_Store
+components/U-bending/Hot Stamping/.DS_Store
+components/U-bending/Hot Stamping/Aluminium Alloy 6082/.DS_Store
+.gitignore
+python/optimisation_funcs/.DS_Store
+python/optimisation_funcs/__pycache__/autodecoder.cpython-39.pyc
+python/optimisation_funcs/__pycache__/implicitShapeNetworkModels.cpython-39.pyc
+python/optimisation_funcs/__pycache__/manufacturingSurrogateModels_bulkhead.cpython-39.pyc
+python/optimisation_funcs/__pycache__/manufacturingSurrogateModels_ubending.cpython-39.pyc
+python/optimisation_funcs/__pycache__/manufacturingSurrogateModels.cpython-39.pyc
+python/optimisation_funcs/__pycache__/optimisation_mainscript.cpython-39.pyc
+python/optimisation_funcs/__pycache__/plotting.cpython-39.pyc
+python/optimisation_funcs/__pycache__/single_prediction.cpython-39.pyc
+python/optimisation_funcs/__pycache__/surface_points_normals.cpython-39.pyc
+python/optimisation_funcs/__pycache__/U_ResSEUNet_512_B4_2000_LRFix00004_E6B6D6_Th.cpython-39.pyc
+python/optimisation_funcs/model_confirugrations/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/UBending_models_newgeo/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/UBending_models_newgeo/InputTestOriginalAndNN_Feb23.npy
+python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/UBending_models_newgeo/Ubending_reference_blank_geo_before_springback.npy
+python/windows/__pycache__/optimisation_results.cpython-39.pyc
+python/windows/__pycache__/optimisation_setup.cpython-39.pyc
+python/windows/__pycache__/optimisation_setup2.cpython-39.pyc
+temp/.DS_Store
+temp/input.npy
+temp/optimisation/OptimisationOutputs/.DS_Store
+temp/optimisation/OptimisationOutputs/bulkhead/.DS_Store
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
