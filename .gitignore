@@ -41,3 +41,11 @@ python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_M
 temp/.DS_Store
 .gitignore
 temp/optimisation/OptimisationOutputs/bulkhead/.DS_Store
+components/Car Door Panel/Cold Stamping/.DS_Store
+.gitignore
+components/U-bending/Hot Stamping/.DS_Store
+.gitignore
+python/optimisation_funcs/.DS_Store
+python/optimisation_funcs/model_confirugrations/u-bending/.DS_Store
+.gitignore
+temp/optimisation/OptimisationOutputs/.DS_Store
