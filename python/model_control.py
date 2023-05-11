@@ -15,19 +15,19 @@ model_dir = ""
 # model.eval()
 
 
-def load_model (process, material, model_type):
+def load_model (component, process, material, indicator):
     global model, model_dir
 
-    model_dir = os.path.join(os.getcwd(), "models", process, material)
+    model_dir = os.path.join(os.getcwd(), "components", component, process, material)
 
-    if model_type == "Thinning":
+    if indicator == "Thinning":
         model = ResUNet(num_channel,batch_size, 5, 4, 2)
         model = model.to(device)
     else:
         model = ResUNet(num_channel,batch_size, 3, 6, 3)
         model = model.to(device)
 
-    model_dir = os.path.join(model_dir, model_type)
+    model_dir = os.path.join(model_dir, indicator)
     model.load_state_dict(torch.load(model_dir, map_location=device))
     model.eval()
 

@@ -2,7 +2,8 @@ import json, os
 
 from python import die, model_control
 
-selected_process = "Car Door Panel Stamping"
+selected_component = "Car Door Panel Stamping"
+selected_process = "Cold Stamping"
 selected_material = "Aluminium Aloy 5754"
 
 def predictionmesh (die_dir, edge_dir, blank_dir, qml):
@@ -10,81 +11,87 @@ def predictionmesh (die_dir, edge_dir, blank_dir, qml):
     die.load(die_dir, edge_dir, blank_dir, qml)
 
 
-def processes ():
-    return [ process for process in os.listdir("models") if process[0] != "."  ]
+def components ():
+    return [ component for component in os.listdir("components") if component[0] != "." ]
+
+def processes (component):
+    return [ process for process in os.listdir(os.path.join("components", component)) if process[0] != "."  ]
 
 
-def materials (process):
-    # materials = []
-    # for material in os.listdir(os.path.join("models", process)):
-    #     if material[0] != ".":
-    #         materials.append(material)
-    # return materials
-    return [ material for material in os.listdir(os.path.join("models", process)) if material[0] != "." ]
+def materials (component, process):
+    return [ material for material in os.listdir(os.path.join("components", component, process)) if material[0] != "." ]
 
 
-def models (process, material):
-    return [ model for model in os.listdir(os.path.join("models", process, material)) if model[0] != "." ]
+def indicators (component, process, material):
+    return [ indicator for indicator in os.listdir(os.path.join("components", component, process, material)) if indicator[0] != "." ]
 
+
+
+
+
+
+#-------------------------------------------------------------------------------------
+# LEGACY
+#-------------------------------------------------------------------------------------
 
 def process_inputs ():
-    global selected_process
+    global selected_component
 
     with open('info.json') as f:
         info = json.load(f)
 
         for process in info["processes"]:
-            if process["name"] == selected_process:
+            if process["name"] == selected_component:
                 return [ input["name"] for input in process["inputs"] ]
         
 
 def process_input_units (input_name):
-    global selected_process
+    global selected_component
 
     with open('info.json') as f:
         info = json.load(f)
 
         for process in info["processes"]:
-            if process["name"] == selected_process:
+            if process["name"] == selected_component:
                 for input in process["inputs"]:
                     if input["name"] == input_name:
                         return input["units"]
                     
 
 def process_input_lowerbound (input_name):
-    global selected_process
+    global selected_component
 
     with open('info.json') as f:
         info = json.load(f)
 
         for process in info["processes"]:
-            if process["name"] == selected_process:
+            if process["name"] == selected_component:
                 for input in process["inputs"]:
                     if input["name"] == input_name:
                         return input["lower bound"]
                     
                     
 def process_input_upperbound (input_name):
-    global selected_process
+    global selected_component
 
     with open('info.json') as f:
         info = json.load(f)
 
         for process in info["processes"]:
-            if process["name"] == selected_process:
+            if process["name"] == selected_component:
                 for input in process["inputs"]:
                     if input["name"] == input_name:
                         return input["upper bound"]
                     
                     
 def process_input_decimals (input_name):
-    global selected_process
+    global selected_component
 
     with open('info.json') as f:
         info = json.load(f)
 
         for process in info["processes"]:
-            if process["name"] == selected_process:
+            if process["name"] == selected_component:
                 for input in process["inputs"]:
                     if input["name"] == input_name:
                         return input["decimals"]
@@ -103,18 +110,18 @@ def process_outputs (process_name):
 
 
 def select_materialandprocess (material, process):
-    global selected_process, selected_material
+    global selected_component, selected_material
 
     selected_material = material
-    selected_process = process
+    selected_component = process
 
     model_control.selectMaterialandProcess(material, process)
 
 
 def get_selected_materialandprocess ():
-    global selected_process, selected_material
+    global selected_component, selected_material
 
-    return selected_process, selected_material
+    return selected_component, selected_material
 
 
 def optivaropts ():

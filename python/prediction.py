@@ -27,7 +27,7 @@ def load_mesh (file_path, window):
     file = file_path
     file_ext = file.split(".")[-1].lower()
     # load displacement model
-    model_control.load_model(window.process_dropdown.currentText(), window.material_dropdown.currentText(), 
+    model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), 
                             "Displacement")
 
     print(file_ext)
@@ -82,26 +82,25 @@ def load_mesh (file_path, window):
         pcd, depth=9)
 
     # load selected model
-    selected_model = window.model_dropdown.currentText()
+    selected_indicator = window.indicator_dropdown.currentText()
     
     # predict value and apply colour map
-    if selected_model == "Displacement":
+    if selected_indicator == "Displacement":
         plot_displacement(window)
 
-    elif selected_model == "Thinning":
+    elif selected_indicator == "Thinning":
         plot_thinning(window)
 
 
 def change_model (window):
     global o3dmesh, die_shape, die_shape_zoom, disp, data_colours
     # load selected model
-    selected_model = window.model_dropdown.currentText()
-    model_control.load_model(window.process_dropdown.currentText(), window.material_dropdown.currentText(), 
-                            selected_model)
+    selected_indicator = window.indicator_dropdown.currentText()
+    model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), selected_indicator)
     if die_shape != []:
-        if selected_model == "Thinning":
+        if selected_indicator == "Thinning":
             plot_thinning(window)
-        elif selected_model == "Displacement":
+        elif selected_indicator == "Displacement":
             plot_displacement(window)
             
 
@@ -115,7 +114,7 @@ def add_items (ax, gw, window):
     cmap = gw.colorMap()
     o3dcolours = cmap.mapToFloat(data_colours)
     meshdata = MeshData(vertexes=np.asarray(o3dmesh.vertices), faces=np.asarray(o3dmesh.triangles), vertexColors=o3dcolours)
-    meshitem = GLMeshItem(meshdata=meshdata, drawFaces=True, drawEdges=True)
+    meshitem = GLMeshItem(meshdata=meshdata, drawFaces=True, drawEdges=False)
     window.main_view.clear()
     window.main_view.addItem(meshitem)
     window.GraphicsLayoutWidget.clear()

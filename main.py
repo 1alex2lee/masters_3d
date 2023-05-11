@@ -24,12 +24,12 @@ from python.windows import optimisation_results
 if __name__ == '__main__':
     # app = QtWidgets.QApplication(sys.argv)
     app = QApplication(sys.argv)
-    main = main.Window()
+    # main = main.Window()
     # main = optimisation_setup.Window()
     # main = optimisation_setup2.Window()
     # main = optimisation_results.Window()
     # main = developer.DeveloperWindow()
-    # main = developer.TrainNewWindow()
+    main = developer.TrainNewWindow()
     
     # input = np.load("temp/input.npy")
     # output = np.load("temp/output.npy")
