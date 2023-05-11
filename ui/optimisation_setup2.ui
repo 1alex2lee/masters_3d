@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>868</width>
+    <height>574</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Optimisation in Progress</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>10</number>
+    </property>
+    <property name="topMargin">
+     <number>10</number>
+    </property>
+    <property name="rightMargin">
+     <number>10</number>
+    </property>
+    <property name="bottomMargin">
+     <number>10</number>
+    </property>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="cancel_button">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <layout class="QGridLayout" name="grid"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="next_button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="runsno_label">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>16777214</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>16777214</width>
+     <height>24</height>
+    </size>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <addaction name="action_prediction"/>
+    <addaction name="action_optimisation"/>
+    <addaction name="action_sensitivity"/>
+    <addaction name="action_developer"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_prediction">
+   <property name="text">
+    <string>Prediction</string>
+   </property>
+  </action>
+  <action name="action_optimisation">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Optimisation</string>
+   </property>
+  </action>
+  <action name="action_sensitivity">
+   <property name="text">
+    <string>Sensitivity Analysis</string>
+   </property>
+  </action>
+  <action name="action_developer">
+   <property name="text">
+    <string>Developer</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
