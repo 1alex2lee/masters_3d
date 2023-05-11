@@ -1,11 +1,103 @@
 
-import threading, time, random, os, json
+import threading
+import time
+import random
+import os
+import json
 import pandas as pd
 import numpy as np
+import torch
+from pyqtgraph.opengl import MeshData, GLScatterPlotItem, GLMeshItem
+import open3d as o3d
+from pyqtgraph import AxisItem, GradientEditorItem
 
+from PyQt6.QtCore import QObject, pyqtSignal
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, Qt, Property, Slot
 
 from python import model_control
+from python.optimisation_funcs import surface_points_normals, autodecoder, single_prediction
+
+
+class load_mesh_worker(QObject):
+    def __init__(self, file, window, selected_component):
+        super().__init__()
+        self.file = file
+        self.window = window
+        self.component = selected_component
+        # self.cancelled = False
+        # self.window.cancel.connect(self.stop)
+
+    finished = pyqtSignal()
+    progress = pyqtSignal(int)
+
+    def stop (self):
+        self.cancelled = True
+
+    def run (self):
+        points, normals, offsurface_points = surface_points_normals.generate(self.file, self)
+        best_latent_vector = autodecoder.get_latent_vector(points, normals, offsurface_points, self, self.component)
+        print("best latent vector: ", best_latent_vector)
+        
+
+def load_mesh(file_path, window):
+    file = file_path
+    is_file, file_ext = os.path.isfile(file), file.rsplit('.', 1)[1].lower()
+
+    if is_file and file_ext == 'stl':  # if the mesh files exist and they are .STL extension
+        points, normals, offsurface_points = surface_points_normals.generate(file, window)
+        best_latent_vector = autodecoder.get_latent_vector(points, normals, offsurface_points, window)
+        print("best latent vector: ", best_latent_vector)
+    else:
+        print("error with file!")
+
+# def begin (num_iterations, window):
+#     optimisation_mainscript.begin(num_iterations, window)
+
+
+def load_result(window, num=100):
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    latentVectorsForPlotting = torch.load(window.file, map_location=device)
+    component = window.file.split("/")[-2]
+    
+    num_designs = len(latentVectorsForPlotting)
+    showing_num_design = int(round(num_designs * num/100, 0))
+    window.num_design_label.setText(f"Showing design iteration {showing_num_design} of {num_designs}")
+
+    latentForOptimization = latentVectorsForPlotting[showing_num_design-1][-1]
+
+    verts, faces = autodecoder.get_verts_faces(latentForOptimization, window, component)
+    
+    # meshdata = MeshData(vertexes=verts, faces=faces)
+    # meshitem = GLMeshItem(meshdata=meshdata, drawFaces=True, drawEdges=False)
+    # window.main_view.clear()
+    # window.main_view.addItem(meshitem)
+
+    if component == "bulkhead":
+        single_prediction.bulkhead_thinning(verts, faces, window)
+    if component == "u-bending":
+        indicator = window.indicator_dropdown.currentText().lower()
+        if indicator == "thinning":
+            window.direction_label.setEnabled(False)
+            window.direction_dropdown.setEnabled(False)
+            single_prediction.ubending_thinning(verts, faces, window)
+        if indicator == "displacement":
+            window.direction_label.setEnabled(True)
+            window.direction_dropdown.setEnabled(True)
+            single_prediction.ubending_displacement(verts, faces, window)
+
+
+    # window.GraphicsLayoutWidget.clear()
+    # window.GraphicsLayoutWidget.addItem(ax)
+    # window.GraphicsLayoutWidget.addItem(gw)
+
+    # print("mesh added")
+
+
+
+
+#-------------------------------------------------------------------------------------
+# LEGACY
+#-------------------------------------------------------------------------------------
 
 with open('info.json') as f:
     info = json.load(f)
@@ -20,8 +112,8 @@ with open('info.json') as f:
                 all_vars.append(output["name"])
 
 # all_vars = ["Thinning","Springback","Strain","Force","Velocity","Blank Thickness","Temperature"]
-picked_vars = ["thinning input 1","thinning input 2"]
-units_library = ["%","%","%","kN","mm/s","mm","°C"]
+picked_vars = ["thinning input 1", "thinning input 2"]
+units_library = ["%", "%", "%", "kN", "mm/s", "mm", "°C"]
 units = []
 bounds = {}
 options = []
@@ -34,14 +126,14 @@ bestrun = []
 stop_requested = False
 
 
-def load_varopts ():
+def load_varopts():
     global all_vars
 
     print("variable options for requested")
     return all_vars
 
 
-def enable_vars (var_name, process_type):
+def enable_vars(var_name, process_type):
     with open('info.json') as f:
         info = json.load(f)
 
@@ -56,7 +148,7 @@ def enable_vars (var_name, process_type):
         return False
 
 
-def pick_option (option):
+def pick_option(option):
     global picked_vars
 
     # option = str(option).lower()
@@ -64,7 +156,7 @@ def pick_option (option):
     print(option + " picked")
 
 
-def unpick_option (option):
+def unpick_option(option):
     global picked_vars
 
     # option = str(option).lower()
@@ -73,23 +165,24 @@ def unpick_option (option):
         print(option + " unpicked")
 
 
-def set_options (material, process, model, goal, aim, setto, search, runsno):
+def set_options(material, process, model, goal, aim, setto, search, runsno):
     global options
 
     options = [goal, aim, setto, search, runsno, model]
-    print("options set: ",material, process, model, goal, aim, setto, search, runsno)
+    print("options set: ", material, process,
+          model, goal, aim, setto, search, runsno)
 
     model_control.selectMaterialandProcess(material, process)
     model_control.load(model)
 
 
-def picked_optivars ():
+def picked_optivars():
     global picked_vars
 
     return picked_vars
 
 
-def get_var_property (var, property):
+def get_var_property(var, property):
     global options
 
     model_type = options[5]
@@ -102,13 +195,13 @@ def get_var_property (var, property):
                 for input in model["inputs"]:
                     if input["name"] == var:
                         return input[property]
-                
+
                 for output in model["outputs"]:
                     if output["name"] == var:
                         return output[property]
-                    
-    
-def change_name (idx, old, new):
+
+
+def change_name(idx, old, new):
     global all_vars
 
     all_vars[idx] = new
@@ -123,34 +216,33 @@ def change_name (idx, old, new):
         for output in model["outputs"]:
             if output["name"] == old:
                 output["name"] = new
-    
+
     with open('info.json', "w+") as f:
         f.write(json.dumps(info, indent=2))
 
-    print("name change from ",old," to ",all_vars[idx])
-    
+    print("name change from ", old, " to ", all_vars[idx])
 
 
-def set_bounds (var, lower, upper, unit):
+def set_bounds(var, lower, upper, unit):
     global bounds
 
     print(var, lower, upper, unit)
     bounds[var] = [lower, upper, unit]
 
 
-def start (qml):
+def start(qml):
     global bounds, options
 
     threading.Thread(target=optimise, args=(bounds, options, qml)).start()
 
 
-def stop ():
+def stop():
     global stop_requested
 
     stop_requested = True
 
 
-def optimise (bounds, options, qml):
+def optimise(bounds, options, qml):
     global progress, runsno, picked_vars, bestrun, best_output, current_output, all_runs, stop_requested
 
     print("optimisation started")
@@ -167,7 +259,7 @@ def optimise (bounds, options, qml):
 
         if stop_requested:
             all_runs_df = pd.DataFrame(all_runs)
-            all_runs_df.to_csv(os.path.join("temp","optimisation_result.csv"))
+            all_runs_df.to_csv(os.path.join("temp", "optimisation_result.csv"))
             print("optimisation stopped")
             break
 
@@ -175,7 +267,7 @@ def optimise (bounds, options, qml):
         current_output = random.random()
 
         for var in picked_vars:
-           all_runs[var].append(random.randint(bounds[var][0],bounds[var][1]))
+           all_runs[var].append(random.randint(bounds[var][0], bounds[var][1]))
 
         #    var_list = all_runs[var]
         #    var_list.append(random.randint(bounds[var][0],bounds[var][1]))
@@ -199,21 +291,21 @@ def optimise (bounds, options, qml):
         time.sleep(2)
 
     all_runs_df = pd.DataFrame(all_runs)
-    all_runs_df.to_csv(os.path.join("temp","optimisation_result.csv"))
+    all_runs_df.to_csv(os.path.join("temp", "optimisation_result.csv"))
 
 
-def update_graph ():
-    return random.randint(1,20), random.randint(1,20), random.random()
+def update_graph():
+    return random.randint(1, 20), random.randint(1, 20), random.random()
 
 
-def getbestrun ():
+def getbestrun():
     global picked_vars, bestrun
 
     return bestrun
 
 
-def getbestrun_final ():
-    all_runs = pd.read_csv(os.path.join("temp","optimisation_result.csv"))
+def getbestrun_final():
+    all_runs = pd.read_csv(os.path.join("temp", "optimisation_result.csv"))
     aim = str(all_runs.columns[-1]).split('_')[-2]
     setto = int(str(all_runs.columns[-1]).split('_')[-1])
 
@@ -223,7 +315,7 @@ def getbestrun_final ():
         idx = all_runs[all_runs.columns[-1]].idxmax()
     if aim == "setto":
         idx = all_runs.sub(setto).abs().idxmin()
-   
+
     best_run = []
 
     for i, column in enumerate(all_runs.columns):
@@ -235,7 +327,8 @@ def getbestrun_final ():
             this_aim = str(column).split('_')[-2]
 
             if this_aim != "setto":
-                best_run.append(["_".join(str(column).split('_')[:-1]), float(all_runs[column][idx])])
+                best_run.append(
+                    ["_".join(str(column).split('_')[:-1]), float(all_runs[column][idx])])
 
         else:
             best_run.append([column, float(all_runs[column][idx])])
@@ -243,8 +336,8 @@ def getbestrun_final ():
     return best_run
 
 
-def get_final_vars ():
-    all_runs = pd.read_csv(os.path.join("temp","optimisation_result.csv"))
+def get_final_vars():
+    all_runs = pd.read_csv(os.path.join("temp", "optimisation_result.csv"))
     vars = ["Run #"]
 
     for i, column in enumerate(all_runs.columns[1:]):
@@ -261,13 +354,12 @@ def get_final_vars ():
     return vars
 
 
-def get_final_graph ():
-    all_runs = np.genfromtxt(os.path.join("temp","optimisation_result.csv"), delimiter=',')
+def get_final_graph():
+    all_runs = np.genfromtxt(os.path.join(
+        "temp", "optimisation_result.csv"), delimiter=',')
 
-    final = [ [i,float(run[-1])] for i,run in enumerate(all_runs) ]
+    final = [[i, float(run[-1])] for i, run in enumerate(all_runs)]
     return final
-
-
 
 
 class BestRunTable(QAbstractTableModel):
@@ -317,5 +409,3 @@ class BestRunTable(QAbstractTableModel):
 
     def sort(self, var):
         return "sort by "+var
-        
-        
