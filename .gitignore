@@ -370,3 +370,10 @@ temp/training data/targets/Sample_5/Backbone765_5.out
 temp/training data/targets/Sample_5/tmp_local_launch_modified.bat
 python/.DS_Store
 python/developer_funcs/__pycache__/data_prep.cpython-39.pyc
+python/developer_funcs/__pycache__/data_prep.cpython-38.pyc
+python/optimisation_funcs/__pycache__/autodecoder.cpython-38.pyc
+python/optimisation_funcs/__pycache__/implicitShapeNetworkModels.cpython-38.pyc
+python/optimisation_funcs/__pycache__/single_prediction.cpython-38.pyc
+python/optimisation_funcs/__pycache__/surface_points_normals.cpython-38.pyc
+python/windows/__pycache__/developer.cpython-38.pyc
+python/windows/__pycache__/main.cpython-38.pyc
