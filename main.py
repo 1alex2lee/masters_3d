@@ -14,22 +14,23 @@ from stl import mesh
 import numpy as np
 
 from python import load, model_control, prediction
-from python.windows import main
+from python.windows import prediction
 from python.windows import developer
-from python.windows import optimisation
 from python.windows import optimisation_setup
 from python.windows import optimisation_setup2
 from python.windows import optimisation_results
+from python.windows import sensitivity
 
 if __name__ == '__main__':
     # app = QtWidgets.QApplication(sys.argv)
     app = QApplication(sys.argv)
-    # main = main.Window()
+    # prediction = prediction.Window()
     # main = optimisation_setup.Window()
     # main = optimisation_setup2.Window()
-    main = optimisation_results.Window()
+    # main = optimisation_results.Window()
     # main = developer.DeveloperWindow()
-    # main = developer.TrainNewWindow()
+    main = developer.TrainNewWindow()
+    # main = sensitivity.Window()
     
     # input = np.load("temp/input.npy")
     # output = np.load("temp/output.npy")

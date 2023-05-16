@@ -11,7 +11,7 @@ from stl import mesh
 import numpy as np
 
 from python import load, model_control, prediction
-from python.windows import developer, optimisation, optimisation_setup
+from python.windows import developer, optimisation_results, optimisation_setup, sensitivity
 from python.optimisation_funcs import surface_points_normals, autodecoder, single_prediction
 
 class Window(QMainWindow):
@@ -45,7 +45,9 @@ class Window(QMainWindow):
         # self.direction_dropdown.currentTextChanged.connect(self.change_direction)
         self.direction_dropdown.currentTextChanged.connect(self.load_mesh)
 
+        self.action_newoptimisation.triggered.connect(self.new_optimisaiton_window)
         self.action_optimisation.triggered.connect(self.open_optimisaiton_window)
+        self.action_sensitivity.triggered.connect(self.open_sensitivity_window)
         self.action_developer.triggered.connect(self.open_developer_window)
 
         self.update_process_dropdown()
@@ -85,9 +87,10 @@ class Window(QMainWindow):
     def prompt_file (self):
         self.file = QFileDialog.getOpenFileName(self, "Import Mesh", filter="STL file (*.stl);; STEP file (*.step)")
         component = self.component_dropdown.currentText().lower()
-        self.points, self.normals, self.offsurface_points = surface_points_normals.generate(self.file[0], self)
-        self.best_latent_vector = autodecoder.get_latent_vector(self.points, self.normals, self.offsurface_points, self, component)
-        self.verts, self.faces = autodecoder.get_verts_faces(self.best_latent_vector, self, component)
+        if component == "bulkhead" or component == "u-bending":
+            self.points, self.normals, self.offsurface_points = surface_points_normals.generate(self.file[0], self)
+            self.best_latent_vector = autodecoder.get_latent_vector(self.points, self.normals, self.offsurface_points, self, component)
+            self.verts, self.faces = autodecoder.get_verts_faces(self.best_latent_vector, self, component)
         self.load_mesh()
 
     def load_mesh (self):
@@ -106,12 +109,24 @@ class Window(QMainWindow):
             if indicator == "thinning":
                 single_prediction.ubending_thinning(self.verts, self.faces, self)
             if indicator == "displacement":
-                single_prediction.ubending_displacement(self.verts, self.faces, self)
+                 single_prediction.ubending_displacement(self.verts, self.faces, self)
             
-    def open_optimisaiton_window (self):
+    def new_optimisaiton_window (self):
         self.optimisation_window = optimisation_setup.Window()
+        self.close()
+        self.optimisation_window.show()   
+
+    def open_optimisaiton_window (self):
+        self.optimisation_window = optimisation_results.Window()
+        self.close()
         self.optimisation_window.show()
+
+    def open_sensitivity_window (self):
+        self.sensitivity_window = sensitivity.Window()
+        self.close()
+        self.sensitivity_window.show()
 
     def open_developer_window (self):
         self.developer_window = developer.DeveloperWindow()
+        self.close()
         self.developer_window.show()
