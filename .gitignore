@@ -13,7 +13,6 @@ python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
 python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
-.gitignore
 ui/.DS_Store
 /python/__pycache__
 python/__pycache__/load.cpython-39.pyc
@@ -21,33 +20,21 @@ python/__pycache__/model_architecture.cpython-39.pyc
 python/__pycache__/model_control.cpython-39.pyc
 python/__pycache__/prediction.cpython-39.pyc
 components/Bulkhead/HFQ/Aluminium Alloy 6082/.DS_Store
-.gitignore
-.gitignore
 components/U-bending/.DS_Store
 components/.DS_Store
 components/Bulkhead/.DS_Store
 components/Bulkhead/HFQ/.DS_Store
 components/Car Door Panel/.DS_Store
-.gitignore
-.gitignore
-.gitignore
 components/U-bending/Hot Stamping/Aluminium Alloy 6082/.DS_Store
-.gitignore
 python/optimisation_funcs/model_confirugrations/.DS_Store
-.gitignore
 python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/.DS_Store
-.gitignore
 python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/UBending_models_newgeo/.DS_Store
 temp/.DS_Store
-.gitignore
 temp/optimisation/OptimisationOutputs/bulkhead/.DS_Store
 components/Car Door Panel/Cold Stamping/.DS_Store
-.gitignore
 components/U-bending/Hot Stamping/.DS_Store
-.gitignore
 python/optimisation_funcs/.DS_Store
 python/optimisation_funcs/model_confirugrations/u-bending/.DS_Store
-.gitignore
 temp/optimisation/OptimisationOutputs/.DS_Store
 python/optimisation_funcs/__pycache__/autodecoder.cpython-39.pyc
 python/optimisation_funcs/__pycache__/implicitShapeNetworkModels.cpython-39.pyc
@@ -66,7 +53,6 @@ python/windows/__pycache__/optimisation_setup.cpython-39.pyc
 python/windows/__pycache__/optimisation_setup2.cpython-39.pyc
 python/optimisation_funcs/model_confirugrations/u-bending/ModelPreparation/NN2_ManufacturingSurrogate/.DS_Store
 python/developer_funcs/.DS_Store
-.gitignore
 temp/training data/.DS_Store
 temp/training data/inputs/.DS_Store
 temp/training data/inputs/Die/.DS_Store
@@ -383,3 +369,236 @@ python/developer_funcs/__pycache__/script1.cpython-39.pyc
 python/developer_funcs/__pycache__/script2.cpython-39.pyc
 python/windows/__pycache__/prediction.cpython-39.pyc
 python/windows/__pycache__/sensitivity.cpython-39.pyc
+temp/best_latent_vector/Shape_1.pkl
+temp/final_target_images/REDONE_SAMPLEStargetImages_Displacements_Frame_000.npy
+temp/final_target_images/REDONE_SAMPLEStargetImages_Strains_Frame_000.npy
+temp/optimisation/.DS_Store
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/training data/SimulationResultsImages1/.DS_Store
+temp/training data/SimulationResultsImages1/DeformedFENodes/Frame_1/deformedNodalCoordinates_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/DeformedFENodes/Frame_1/deformedNodalCoordinates_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/DeformedFENodes/Frame_1/deformedNodalCoordinates_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/DeformedFENodes/Frame_1/deformedNodalCoordinates_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/DeformedFENodes/Frame_1/deformedNodalCoordinates_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/ElementCentres/Frame_1/elementcentre_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/ElementCentres/Frame_1/elementcentre_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/ElementCentres/Frame_1/elementcentre_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/ElementCentres/Frame_1/elementcentre_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/ElementCentres/Frame_1/elementcentre_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/MajorStrain/Frame_1/Major_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/MajorStrain/Frame_1/Major_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/MajorStrain/Frame_1/Major_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/MajorStrain/Frame_1/Major_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/MajorStrain/Frame_1/Major_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/MinorStrain/Frame_1/Minor_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/MinorStrain/Frame_1/Minor_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/MinorStrain/Frame_1/Minor_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/MinorStrain/Frame_1/Minor_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/MinorStrain/Frame_1/Minor_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/MisesStress/Frame_1/Mises_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/MisesStress/Frame_1/Mises_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/MisesStress/Frame_1/Mises_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/MisesStress/Frame_1/Mises_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/MisesStress/Frame_1/Mises_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/NodalDisplacements/Frame_1/nodalDisplacements_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/NodalDisplacements/Frame_1/nodalDisplacements_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/NodalDisplacements/Frame_1/nodalDisplacements_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/NodalDisplacements/Frame_1/nodalDisplacements_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/NodalDisplacements/Frame_1/nodalDisplacements_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/Thinning/Frame_1/Thinning_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/Thinning/Frame_1/Thinning_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/Thinning/Frame_1/Thinning_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/Thinning/Frame_1/Thinning_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/Thinning/Frame_1/Thinning_5_Frame_1.txt
+temp/training data/SimulationResultsImages1/UndeformedFENodes/Frame_1/undeformedNodes_1_Frame_1.txt
+temp/training data/SimulationResultsImages1/UndeformedFENodes/Frame_1/undeformedNodes_2_Frame_1.txt
+temp/training data/SimulationResultsImages1/UndeformedFENodes/Frame_1/undeformedNodes_3_Frame_1.txt
+temp/training data/SimulationResultsImages1/UndeformedFENodes/Frame_1/undeformedNodes_4_Frame_1.txt
+temp/training data/SimulationResultsImages1/UndeformedFENodes/Frame_1/undeformedNodes_5_Frame_1.txt
+temp/best_latent_vector/Shape_1.pkl
+temp/best_latent_vector/Shape_1.pkl
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/SimulationResultsImages/DeformedFENodes/Frame_1/deformedNodalCoordinates_1_Frame_1.txt
+temp/SimulationResultsImages/DeformedFENodes/Frame_1/deformedNodalCoordinates_2_Frame_1.txt
+temp/SimulationResultsImages/DeformedFENodes/Frame_1/deformedNodalCoordinates_3_Frame_1.txt
+temp/SimulationResultsImages/DeformedFENodes/Frame_1/deformedNodalCoordinates_4_Frame_1.txt
+temp/SimulationResultsImages/DeformedFENodes/Frame_1/deformedNodalCoordinates_5_Frame_1.txt
+temp/SimulationResultsImages/ElementCentres/Frame_1/elementcentre_1_Frame_1.txt
+temp/SimulationResultsImages/ElementCentres/Frame_1/elementcentre_2_Frame_1.txt
+temp/SimulationResultsImages/ElementCentres/Frame_1/elementcentre_3_Frame_1.txt
+temp/SimulationResultsImages/ElementCentres/Frame_1/elementcentre_4_Frame_1.txt
+temp/SimulationResultsImages/ElementCentres/Frame_1/elementcentre_5_Frame_1.txt
+temp/SimulationResultsImages/MajorStrain/Frame_1/Major_1_Frame_1.txt
+temp/SimulationResultsImages/MajorStrain/Frame_1/Major_2_Frame_1.txt
+temp/SimulationResultsImages/MajorStrain/Frame_1/Major_3_Frame_1.txt
+temp/SimulationResultsImages/MajorStrain/Frame_1/Major_4_Frame_1.txt
+temp/SimulationResultsImages/MajorStrain/Frame_1/Major_5_Frame_1.txt
+temp/SimulationResultsImages/MinorStrain/Frame_1/Minor_1_Frame_1.txt
+temp/SimulationResultsImages/MinorStrain/Frame_1/Minor_2_Frame_1.txt
+temp/SimulationResultsImages/MinorStrain/Frame_1/Minor_3_Frame_1.txt
+temp/SimulationResultsImages/MinorStrain/Frame_1/Minor_4_Frame_1.txt
+temp/SimulationResultsImages/MinorStrain/Frame_1/Minor_5_Frame_1.txt
+temp/SimulationResultsImages/MisesStress/Frame_1/Mises_1_Frame_1.txt
+temp/SimulationResultsImages/MisesStress/Frame_1/Mises_2_Frame_1.txt
+temp/SimulationResultsImages/MisesStress/Frame_1/Mises_3_Frame_1.txt
+temp/SimulationResultsImages/MisesStress/Frame_1/Mises_4_Frame_1.txt
+temp/SimulationResultsImages/MisesStress/Frame_1/Mises_5_Frame_1.txt
+temp/SimulationResultsImages/NodalDisplacements/Frame_1/nodalDisplacements_1_Frame_1.txt
+temp/SimulationResultsImages/NodalDisplacements/Frame_1/nodalDisplacements_2_Frame_1.txt
+temp/SimulationResultsImages/NodalDisplacements/Frame_1/nodalDisplacements_3_Frame_1.txt
+temp/SimulationResultsImages/NodalDisplacements/Frame_1/nodalDisplacements_4_Frame_1.txt
+temp/SimulationResultsImages/NodalDisplacements/Frame_1/nodalDisplacements_5_Frame_1.txt
+temp/SimulationResultsImages/Thinning/Frame_1/Thinning_1_Frame_1.txt
+temp/SimulationResultsImages/Thinning/Frame_1/Thinning_2_Frame_1.txt
+temp/SimulationResultsImages/Thinning/Frame_1/Thinning_3_Frame_1.txt
+temp/SimulationResultsImages/Thinning/Frame_1/Thinning_4_Frame_1.txt
+temp/SimulationResultsImages/Thinning/Frame_1/Thinning_5_Frame_1.txt
+temp/SimulationResultsImages/UndeformedFENodes/Frame_1/undeformedNodes_1_Frame_1.txt
+temp/SimulationResultsImages/UndeformedFENodes/Frame_1/undeformedNodes_2_Frame_1.txt
+temp/SimulationResultsImages/UndeformedFENodes/Frame_1/undeformedNodes_3_Frame_1.txt
+temp/SimulationResultsImages/UndeformedFENodes/Frame_1/undeformedNodes_4_Frame_1.txt
+temp/SimulationResultsImages/UndeformedFENodes/Frame_1/undeformedNodes_5_Frame_1.txt
+temp/training data/ImagePreprocessing_SimulationResults_Script1_PointCloudRepresentation_edited.ipynb
+temp/training data/ImageProcessing_SimulationResults_Script2_TargetImages_edited.ipynb
+temp/training data/exported_targets/.DS_Store
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes3/DeformedMesh_1.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes3/DeformedMesh_2.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes3/DeformedMesh_3.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes3/DeformedMesh_4.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes3/DeformedMesh_5.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes4/DeformedMesh_1.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes4/DeformedMesh_2.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes4/DeformedMesh_3.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes4/DeformedMesh_4.pc
+temp/training data/exported_targets/DeformedMeshes/DeformedMeshes4/DeformedMesh_5.pc
+temp/training data/exported_targets/Displacements/Disp1/NodalDisplacements_1.asc
+temp/training data/exported_targets/Displacements/Disp1/NodalDisplacements_2.asc
+temp/training data/exported_targets/Displacements/Disp1/NodalDisplacements_3.asc
+temp/training data/exported_targets/Displacements/Disp1/NodalDisplacements_4.asc
+temp/training data/exported_targets/Displacements/Disp1/NodalDisplacements_5.asc
+temp/training data/exported_targets/Displacements/Disp2/NodalDisplacements_1.asc
+temp/training data/exported_targets/Displacements/Disp2/NodalDisplacements_2.asc
+temp/training data/exported_targets/Displacements/Disp2/NodalDisplacements_3.asc
+temp/training data/exported_targets/Displacements/Disp2/NodalDisplacements_4.asc
+temp/training data/exported_targets/Displacements/Disp2/NodalDisplacements_5.asc
+temp/training data/exported_targets/Displacements/Disp3/NodalDisplacements_1.asc
+temp/training data/exported_targets/Displacements/Disp3/NodalDisplacements_2.asc
+temp/training data/exported_targets/Displacements/Disp3/NodalDisplacements_3.asc
+temp/training data/exported_targets/Displacements/Disp3/NodalDisplacements_4.asc
+temp/training data/exported_targets/Displacements/Disp3/NodalDisplacements_5.asc
+temp/training data/exported_targets/Displacements/Disp4/NodalDisplacements_1.asc
+temp/training data/exported_targets/Displacements/Disp4/NodalDisplacements_2.asc
+temp/training data/exported_targets/Displacements/Disp4/NodalDisplacements_3.asc
+temp/training data/exported_targets/Displacements/Disp4/NodalDisplacements_4.asc
+temp/training data/exported_targets/Displacements/Disp4/NodalDisplacements_5.asc
+temp/training data/exported_targets/ExportScripts/ExportScript1_1.txt
+temp/training data/exported_targets/ExportScripts/ExportScript1_2.txt
+temp/training data/exported_targets/ExportScripts/ExportScript1_3.txt
+temp/training data/exported_targets/ExportScripts/ExportScript1_4.txt
+temp/training data/exported_targets/ExportScripts/ExportScript1_5.txt
+temp/training data/exported_targets/ExportScripts/ExportScript2_1.txt
+temp/training data/exported_targets/ExportScripts/ExportScript2_2.txt
+temp/training data/exported_targets/ExportScripts/ExportScript2_3.txt
+temp/training data/exported_targets/ExportScripts/ExportScript2_4.txt
+temp/training data/exported_targets/ExportScripts/ExportScript2_5.txt
+temp/training data/exported_targets/ExportScripts/ExportScript3_1.txt
+temp/training data/exported_targets/ExportScripts/ExportScript3_2.txt
+temp/training data/exported_targets/ExportScripts/ExportScript3_3.txt
+temp/training data/exported_targets/ExportScripts/ExportScript3_4.txt
+temp/training data/exported_targets/ExportScripts/ExportScript3_5.txt
+temp/training data/exported_targets/ExportScripts/ExportScript4_1.txt
+temp/training data/exported_targets/ExportScripts/ExportScript4_2.txt
+temp/training data/exported_targets/ExportScripts/ExportScript4_3.txt
+temp/training data/exported_targets/ExportScripts/ExportScript4_4.txt
+temp/training data/exported_targets/ExportScripts/ExportScript4_5.txt
+temp/training data/exported_targets/MajorStrain/MajorStrain3/MajorStrain_1.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain3/MajorStrain_2.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain3/MajorStrain_3.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain3/MajorStrain_4.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain3/MajorStrain_5.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain4/MajorStrain_1.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain4/MajorStrain_2.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain4/MajorStrain_3.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain4/MajorStrain_4.asc
+temp/training data/exported_targets/MajorStrain/MajorStrain4/MajorStrain_5.asc
+temp/training data/exported_targets/MinorStrain/MinorStrain4/MajorStrain_1.asc
+temp/training data/exported_targets/MinorStrain/MinorStrain4/MajorStrain_2.asc
+temp/training data/exported_targets/MinorStrain/MinorStrain4/MajorStrain_3.asc
+temp/training data/exported_targets/MinorStrain/MinorStrain4/MajorStrain_4.asc
+temp/training data/exported_targets/MinorStrain/MinorStrain4/MajorStrain_5.asc
+temp/training data/exported_targets/MisesStress/MisesStress3/MisesStress_1.asc
+temp/training data/exported_targets/MisesStress/MisesStress3/MisesStress_2.asc
+temp/training data/exported_targets/MisesStress/MisesStress3/MisesStress_3.asc
+temp/training data/exported_targets/MisesStress/MisesStress3/MisesStress_4.asc
+temp/training data/exported_targets/MisesStress/MisesStress3/MisesStress_5.asc
+temp/training data/exported_targets/MisesStress/MisesStress4/MisesStress_1.asc
+temp/training data/exported_targets/MisesStress/MisesStress4/MisesStress_2.asc
+temp/training data/exported_targets/MisesStress/MisesStress4/MisesStress_3.asc
+temp/training data/exported_targets/MisesStress/MisesStress4/MisesStress_4.asc
+temp/training data/exported_targets/MisesStress/MisesStress4/MisesStress_5.asc
+temp/training data/exported_targets/Thinning/Thinning3/Thinning_1.asc
+temp/training data/exported_targets/Thinning/Thinning3/Thinning_2.asc
+temp/training data/exported_targets/Thinning/Thinning3/Thinning_3.asc
+temp/training data/exported_targets/Thinning/Thinning3/Thinning_4.asc
+temp/training data/exported_targets/Thinning/Thinning3/Thinning_5.asc
+temp/training data/exported_targets/Thinning/Thinning4/Thinning_1.asc
+temp/training data/exported_targets/Thinning/Thinning4/Thinning_2.asc
+temp/training data/exported_targets/Thinning/Thinning4/Thinning_3.asc
+temp/training data/exported_targets/Thinning/Thinning4/Thinning_4.asc
+temp/training data/exported_targets/Thinning/Thinning4/Thinning_5.asc
+temp/training data/targets/Sample_1/Backbone765_1_03_Stamping.exp.bf
+temp/training data/targets/Sample_1/Backbone765_1_03_Stamping.exp.bf~2
+temp/training data/targets/Sample_1/Backbone765_1_04_Springback.exp.bf
+temp/training data/targets/Sample_2/Backbone765_2_03_Stamping.exp.bf
+temp/training data/targets/Sample_2/Backbone765_2_03_Stamping.exp.bf~2
+temp/training data/targets/Sample_2/Backbone765_2_04_Springback.exp.bf
+temp/training data/targets/Sample_3/Backbone765_3_03_Stamping.exp.bf
+temp/training data/targets/Sample_3/Backbone765_3_03_Stamping.exp.bf~2
+temp/training data/targets/Sample_3/Backbone765_3_04_Springback.exp.bf
+temp/training data/targets/Sample_4/Backbone765_4_03_Stamping.exp.bf
+temp/training data/targets/Sample_4/Backbone765_4_03_Stamping.exp.bf~2
+temp/training data/targets/Sample_4/Backbone765_4_04_Springback.exp.bf
+temp/training data/targets/Sample_5/Backbone765_5_03_Stamping.exp.bf
+temp/training data/targets/Sample_5/Backbone765_5_03_Stamping.exp.bf~2
+temp/training data/targets/Sample_5/Backbone765_5_04_Springback.exp.bf
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/dieImagesZ8.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
+temp/optimisation/CADandMesh/SDF/normals.npy
+temp/optimisation/CADandMesh/SDF/offsurface_points.npy
+temp/optimisation/CADandMesh/SDF/surface_points.npy
+temp/optimisation/OptimisationOutputs/u-bending/LatentVectorsForPlotting.pkl
+temp/optimisation/OptimisationOutputs/u-bending/ThinningFieldsForPlotting.pkl
