@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>User-Centric Software to Assist Design for Forming</string>
+   <string>Optimisatoin Results</string>
   </property>
   <widget class="QWidget" name="central_widget">
    <property name="enabled">
@@ -89,6 +89,9 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="num_design_label">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -102,6 +105,9 @@
       </item>
       <item row="3" column="0">
        <widget class="QSlider" name="num_design_slider">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>300</width>
@@ -121,18 +127,28 @@
       </item>
       <item row="4" column="0">
        <layout class="QFormLayout" name="formLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
         </property>
         <item row="0" column="0">
          <widget class="QLabel" name="indicator_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Performance Indicator</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="indicator_dropdown"/>
+         <widget class="QComboBox" name="indicator_dropdown">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="direction_label">
@@ -148,6 +164,16 @@
          <widget class="QComboBox" name="direction_dropdown">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QPushButton" name="refresh_button">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Refresh Mesh</string>
           </property>
          </widget>
         </item>
@@ -189,8 +215,12 @@
     <property name="title">
      <string>Mode</string>
     </property>
-    <addaction name="action_optimisation"/>
-    <addaction name="actionSensitiity_Mode"/>
+    <addaction name="action_prediction"/>
+    <addaction name="separator"/>
+    <addaction name="action_newoptimisation"/>
+    <addaction name="separator"/>
+    <addaction name="action_sensitivity"/>
+    <addaction name="separator"/>
     <addaction name="action_developer"/>
    </widget>
    <widget class="QMenu" name="menuExit">
@@ -208,12 +238,12 @@
     <string>Import New Mesh</string>
    </property>
   </action>
-  <action name="action_optimisation">
+  <action name="action_prediction">
    <property name="text">
-    <string>Optimisation</string>
+    <string>Prediction</string>
    </property>
   </action>
-  <action name="actionSensitiity_Mode">
+  <action name="action_sensitivity">
    <property name="text">
     <string>Sensitiity Analysis</string>
    </property>
@@ -226,6 +256,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="action_newoptimisation">
+   <property name="text">
+    <string>New Optimisation</string>
    </property>
   </action>
  </widget>

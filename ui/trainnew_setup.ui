@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>428</width>
-    <height>487</height>
+    <height>492</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -120,21 +120,21 @@
        </widget>
       </item>
       <item row="7" column="0">
-       <widget class="QLabel" name="output_label">
+       <widget class="QLabel" name="target_label_2">
         <property name="text">
-         <string>Output Data Directory</string>
+         <string>Target Data Directory</string>
         </property>
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="QPushButton" name="output_button">
+       <widget class="QPushButton" name="target_button">
         <property name="text">
          <string>Browse</string>
         </property>
        </widget>
       </item>
       <item row="8" column="0" colspan="2">
-       <widget class="QLabel" name="output_dir_label">
+       <widget class="QLabel" name="target_dir_label">
         <property name="text">
          <string>No folder selected</string>
         </property>

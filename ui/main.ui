@@ -206,8 +206,11 @@
     <property name="title">
      <string>Mode</string>
     </property>
+    <addaction name="action_newoptimisation"/>
     <addaction name="action_optimisation"/>
-    <addaction name="actionSensitiity_Mode"/>
+    <addaction name="separator"/>
+    <addaction name="action_sensitivity"/>
+    <addaction name="separator"/>
     <addaction name="action_developer"/>
    </widget>
    <widget class="QMenu" name="menuExit">
@@ -225,12 +228,12 @@
     <string>Import New Mesh</string>
    </property>
   </action>
-  <action name="action_optimisation">
+  <action name="action_newoptimisation">
    <property name="text">
-    <string>Optimisation</string>
+    <string>New Optimisation</string>
    </property>
   </action>
-  <action name="actionSensitiity_Mode">
+  <action name="action_sensitivity">
    <property name="text">
     <string>Sensitiity Analysis</string>
    </property>
@@ -243,6 +246,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="action_optimisation">
+   <property name="text">
+    <string>Optimisation Workspace</string>
    </property>
   </action>
  </widget>

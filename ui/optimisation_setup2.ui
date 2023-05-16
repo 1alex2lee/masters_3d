@@ -66,41 +66,18 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>16777214</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>16777214</width>
-     <height>24</height>
-    </size>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>Mode</string>
-    </property>
-    <addaction name="action_prediction"/>
-    <addaction name="action_optimisation"/>
-    <addaction name="action_sensitivity"/>
-    <addaction name="action_developer"/>
-   </widget>
-   <addaction name="menuFile"/>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_prediction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Prediction</string>
    </property>
   </action>
   <action name="action_optimisation">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Optimisation</string>

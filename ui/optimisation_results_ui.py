@@ -31,14 +31,16 @@ class Ui_main_window(object):
         main_window.resize(1246, 895)
         self.actionImport_New_Mesh = QAction(main_window)
         self.actionImport_New_Mesh.setObjectName(u"actionImport_New_Mesh")
-        self.action_optimisation = QAction(main_window)
-        self.action_optimisation.setObjectName(u"action_optimisation")
-        self.actionSensitiity_Mode = QAction(main_window)
-        self.actionSensitiity_Mode.setObjectName(u"actionSensitiity_Mode")
+        self.action_prediction = QAction(main_window)
+        self.action_prediction.setObjectName(u"action_prediction")
+        self.action_sensitivity = QAction(main_window)
+        self.action_sensitivity.setObjectName(u"action_sensitivity")
         self.action_developer = QAction(main_window)
         self.action_developer.setObjectName(u"action_developer")
         self.actionExit = QAction(main_window)
         self.actionExit.setObjectName(u"actionExit")
+        self.action_newoptimisation = QAction(main_window)
+        self.action_newoptimisation.setObjectName(u"action_newoptimisation")
         self.central_widget = QWidget(main_window)
         self.central_widget.setObjectName(u"central_widget")
         self.central_widget.setEnabled(True)
@@ -76,12 +78,14 @@ class Ui_main_window(object):
 
         self.num_design_label = QLabel(self.central_widget)
         self.num_design_label.setObjectName(u"num_design_label")
+        self.num_design_label.setEnabled(False)
         self.num_design_label.setMaximumSize(QSize(16777215, 20))
 
         self.grid_layout.addWidget(self.num_design_label, 2, 0, 1, 1)
 
         self.num_design_slider = QSlider(self.central_widget)
         self.num_design_slider.setObjectName(u"num_design_slider")
+        self.num_design_slider.setEnabled(False)
         self.num_design_slider.setMaximumSize(QSize(300, 16777215))
         self.num_design_slider.setMaximum(100)
         self.num_design_slider.setValue(100)
@@ -91,14 +95,17 @@ class Ui_main_window(object):
 
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         self.indicator_label = QLabel(self.central_widget)
         self.indicator_label.setObjectName(u"indicator_label")
+        self.indicator_label.setEnabled(False)
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.indicator_label)
 
         self.indicator_dropdown = QComboBox(self.central_widget)
         self.indicator_dropdown.setObjectName(u"indicator_dropdown")
+        self.indicator_dropdown.setEnabled(False)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.indicator_dropdown)
 
@@ -113,6 +120,12 @@ class Ui_main_window(object):
         self.direction_dropdown.setEnabled(False)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.direction_dropdown)
+
+        self.refresh_button = QPushButton(self.central_widget)
+        self.refresh_button.setObjectName(u"refresh_button")
+        self.refresh_button.setEnabled(False)
+
+        self.formLayout.setWidget(2, QFormLayout.SpanningRole, self.refresh_button)
 
 
         self.grid_layout.addLayout(self.formLayout, 4, 0, 1, 1)
@@ -142,8 +155,12 @@ class Ui_main_window(object):
         self.menubar.addAction(self.menuMode.menuAction())
         self.menubar.addAction(self.menuExit.menuAction())
         self.menuFile.addAction(self.actionImport_New_Mesh)
-        self.menuMode.addAction(self.action_optimisation)
-        self.menuMode.addAction(self.actionSensitiity_Mode)
+        self.menuMode.addAction(self.action_prediction)
+        self.menuMode.addSeparator()
+        self.menuMode.addAction(self.action_newoptimisation)
+        self.menuMode.addSeparator()
+        self.menuMode.addAction(self.action_sensitivity)
+        self.menuMode.addSeparator()
         self.menuMode.addAction(self.action_developer)
         self.menuExit.addAction(self.actionExit)
 
@@ -153,17 +170,19 @@ class Ui_main_window(object):
     # setupUi
 
     def retranslateUi(self, main_window):
-        main_window.setWindowTitle(QCoreApplication.translate("main_window", u"User-Centric Software to Assist Design for Forming", None))
+        main_window.setWindowTitle(QCoreApplication.translate("main_window", u"Optimisatoin Results", None))
         self.actionImport_New_Mesh.setText(QCoreApplication.translate("main_window", u"Import New Mesh", None))
-        self.action_optimisation.setText(QCoreApplication.translate("main_window", u"Optimisation", None))
-        self.actionSensitiity_Mode.setText(QCoreApplication.translate("main_window", u"Sensitiity Analysis", None))
+        self.action_prediction.setText(QCoreApplication.translate("main_window", u"Prediction", None))
+        self.action_sensitivity.setText(QCoreApplication.translate("main_window", u"Sensitiity Analysis", None))
         self.action_developer.setText(QCoreApplication.translate("main_window", u"Developer", None))
         self.actionExit.setText(QCoreApplication.translate("main_window", u"Exit", None))
+        self.action_newoptimisation.setText(QCoreApplication.translate("main_window", u"New Optimisation", None))
         self.load_results_button.setText(QCoreApplication.translate("main_window", u"Load Optimisation Result", None))
         self.component_label.setText(QCoreApplication.translate("main_window", u"No Component loaded", None))
         self.num_design_label.setText(QCoreApplication.translate("main_window", u"No results loaded", None))
         self.indicator_label.setText(QCoreApplication.translate("main_window", u"Performance Indicator", None))
         self.direction_label.setText(QCoreApplication.translate("main_window", u"Displacement Direction", None))
+        self.refresh_button.setText(QCoreApplication.translate("main_window", u"Refresh Mesh", None))
         self.menuFile.setTitle(QCoreApplication.translate("main_window", u"File", None))
         self.menuMode.setTitle(QCoreApplication.translate("main_window", u"Mode", None))
         self.menuExit.setTitle(QCoreApplication.translate("main_window", u"Exit", None))

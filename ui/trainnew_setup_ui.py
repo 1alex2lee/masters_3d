@@ -25,7 +25,7 @@ class Ui_main_window(object):
     def setupUi(self, main_window):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
-        main_window.resize(428, 487)
+        main_window.resize(428, 492)
         self.actionImport_New_Mesh = QAction(main_window)
         self.actionImport_New_Mesh.setObjectName(u"actionImport_New_Mesh")
         self.actionOptimisation_Mode = QAction(main_window)
@@ -108,21 +108,21 @@ class Ui_main_window(object):
 
         self.formLayout.setWidget(6, QFormLayout.SpanningRole, self.input_dir_label)
 
-        self.output_label = QLabel(self.central_widget)
-        self.output_label.setObjectName(u"output_label")
+        self.target_label_2 = QLabel(self.central_widget)
+        self.target_label_2.setObjectName(u"target_label_2")
 
-        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.output_label)
+        self.formLayout.setWidget(7, QFormLayout.LabelRole, self.target_label_2)
 
-        self.output_button = QPushButton(self.central_widget)
-        self.output_button.setObjectName(u"output_button")
+        self.target_button = QPushButton(self.central_widget)
+        self.target_button.setObjectName(u"target_button")
 
-        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.output_button)
+        self.formLayout.setWidget(7, QFormLayout.FieldRole, self.target_button)
 
-        self.output_dir_label = QLabel(self.central_widget)
-        self.output_dir_label.setObjectName(u"output_dir_label")
-        self.output_dir_label.setAlignment(Qt.AlignCenter)
+        self.target_dir_label = QLabel(self.central_widget)
+        self.target_dir_label.setObjectName(u"target_dir_label")
+        self.target_dir_label.setAlignment(Qt.AlignCenter)
 
-        self.formLayout.setWidget(8, QFormLayout.SpanningRole, self.output_dir_label)
+        self.formLayout.setWidget(8, QFormLayout.SpanningRole, self.target_dir_label)
 
         self.epochs_label = QLabel(self.central_widget)
         self.epochs_label.setObjectName(u"epochs_label")
@@ -223,9 +223,9 @@ class Ui_main_window(object):
         self.input_label.setText(QCoreApplication.translate("main_window", u"Input Data Directory", None))
         self.input_button.setText(QCoreApplication.translate("main_window", u"Browse", None))
         self.input_dir_label.setText(QCoreApplication.translate("main_window", u"No folder selected", None))
-        self.output_label.setText(QCoreApplication.translate("main_window", u"Output Data Directory", None))
-        self.output_button.setText(QCoreApplication.translate("main_window", u"Browse", None))
-        self.output_dir_label.setText(QCoreApplication.translate("main_window", u"No folder selected", None))
+        self.target_label_2.setText(QCoreApplication.translate("main_window", u"Target Data Directory", None))
+        self.target_button.setText(QCoreApplication.translate("main_window", u"Browse", None))
+        self.target_dir_label.setText(QCoreApplication.translate("main_window", u"No folder selected", None))
         self.epochs_label.setText(QCoreApplication.translate("main_window", u"Epochs", None))
         self.epochs_number.setText(QCoreApplication.translate("main_window", u"10000", None))
         self.batchsize_label.setText(QCoreApplication.translate("main_window", u"Batch Size", None))

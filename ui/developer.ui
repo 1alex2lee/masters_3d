@@ -116,19 +116,16 @@
    <property name="nativeMenuBar">
     <bool>false</bool>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionImport_New_Mesh"/>
-   </widget>
    <widget class="QMenu" name="menuMode">
     <property name="title">
      <string>Mode</string>
     </property>
-    <addaction name="actionOptimisation_Mode"/>
-    <addaction name="actionSensitiity_Mode"/>
-    <addaction name="action_developer"/>
+    <addaction name="action_prediction"/>
+    <addaction name="separator"/>
+    <addaction name="action_newoptimisation"/>
+    <addaction name="action_optimisation"/>
+    <addaction name="separator"/>
+    <addaction name="action_sensitivity"/>
    </widget>
    <widget class="QMenu" name="menuExit">
     <property name="title">
@@ -136,7 +133,6 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
-   <addaction name="menuFile"/>
    <addaction name="menuMode"/>
    <addaction name="menuExit"/>
   </widget>
@@ -145,12 +141,12 @@
     <string>Import New Mesh</string>
    </property>
   </action>
-  <action name="actionOptimisation_Mode">
+  <action name="action_newoptimisation">
    <property name="text">
-    <string>Optimisation</string>
+    <string>New Optimisation</string>
    </property>
   </action>
-  <action name="actionSensitiity_Mode">
+  <action name="action_sensitivity">
    <property name="text">
     <string>Sensitiity Analysis</string>
    </property>
@@ -163,6 +159,16 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="action_optimisation">
+   <property name="text">
+    <string>Optimisation Workspace</string>
+   </property>
+  </action>
+  <action name="action_prediction">
+   <property name="text">
+    <string>Prediction</string>
    </property>
   </action>
  </widget>

@@ -17,8 +17,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QMainWindow,
-    QMenu, QMenuBar, QProgressBar, QPushButton,
-    QSizePolicy, QStatusBar, QWidget)
+    QProgressBar, QPushButton, QSizePolicy, QStatusBar,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -27,9 +27,10 @@ class Ui_MainWindow(object):
         MainWindow.resize(868, 574)
         self.action_prediction = QAction(MainWindow)
         self.action_prediction.setObjectName(u"action_prediction")
+        self.action_prediction.setEnabled(True)
         self.action_optimisation = QAction(MainWindow)
         self.action_optimisation.setObjectName(u"action_optimisation")
-        self.action_optimisation.setEnabled(False)
+        self.action_optimisation.setEnabled(True)
         self.action_sensitivity = QAction(MainWindow)
         self.action_sensitivity.setObjectName(u"action_sensitivity")
         self.action_developer = QAction(MainWindow)
@@ -68,22 +69,9 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.progressBar, 1, 0, 1, 2)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 16777214, 24))
-        self.menubar.setMinimumSize(QSize(16777214, 24))
-        self.menuFile = QMenu(self.menubar)
-        self.menuFile.setObjectName(u"menuFile")
-        MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menuFile.addAction(self.action_prediction)
-        self.menuFile.addAction(self.action_optimisation)
-        self.menuFile.addAction(self.action_sensitivity)
-        self.menuFile.addAction(self.action_developer)
 
         self.retranslateUi(MainWindow)
 
@@ -99,6 +87,5 @@ class Ui_MainWindow(object):
         self.cancel_button.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
         self.next_button.setText(QCoreApplication.translate("MainWindow", u"Next", None))
         self.runsno_label.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"Mode", None))
     # retranslateUi
 
