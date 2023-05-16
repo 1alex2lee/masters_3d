@@ -377,3 +377,9 @@ python/optimisation_funcs/__pycache__/single_prediction.cpython-38.pyc
 python/optimisation_funcs/__pycache__/surface_points_normals.cpython-38.pyc
 python/windows/__pycache__/developer.cpython-38.pyc
 python/windows/__pycache__/main.cpython-38.pyc
+python/developer_funcs/__pycache__/die_images.cpython-39.pyc
+python/developer_funcs/__pycache__/ReSEUNet_training.cpython-39.pyc
+python/developer_funcs/__pycache__/script1.cpython-39.pyc
+python/developer_funcs/__pycache__/script2.cpython-39.pyc
+python/windows/__pycache__/prediction.cpython-39.pyc
+python/windows/__pycache__/sensitivity.cpython-39.pyc
