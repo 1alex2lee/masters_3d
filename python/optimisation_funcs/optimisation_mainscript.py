@@ -57,6 +57,7 @@ class worker(QObject):
     progress = pyqtSignal(int)
 
     def stop (self):
+        print("stop requested")
         self.cancelled = True
 
     def run (self):

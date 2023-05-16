@@ -54,10 +54,11 @@ def load_mesh(file_path, window):
 #     optimisation_mainscript.begin(num_iterations, window)
 
 
-def load_result(window, num=100):
+def load_result(window):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     latentVectorsForPlotting = torch.load(window.file, map_location=device)
     component = window.file.split("/")[-2]
+    num = window.num_design_slider.value()
     
     num_designs = len(latentVectorsForPlotting)
     showing_num_design = int(round(num_designs * num/100, 0))

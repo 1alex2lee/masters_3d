@@ -20,7 +20,6 @@ class MplCanvas(FigureCanvasQTAgg):
         self.axes = fig.add_subplot(111)
         super(MplCanvas, self).__init__(fig)
 
-
 # class Worker(QObject):
 #     def __init__(self, num_iterations, window):
 #         super().__init__()
@@ -113,12 +112,6 @@ class Window(QMainWindow):
         self.worker.progress.connect(self.report_progress)
         # Step 6: Start the thread
         self.thread.start()
-
-        # Final resets
-        # self.longRunningBtn.setEnabled(False)
-        # self.thread.finished.connect(
-        #     lambda: self.longRunningBtn.setEnabled(True)
-        # )
         
         self.worker.finished.connect(self.report_finished)
         self.cancel_button.pressed.connect(self.cancel.emit)
@@ -134,6 +127,6 @@ class Window(QMainWindow):
         self.next_button.setEnabled(True)
 
     def show_result (self):
-        self.next_window = optimisation_results.Window(self.component)
+        self.next_window = optimisation_results.Window(component=self.component)
         self.close()
         self.next_window.show()

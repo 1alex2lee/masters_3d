@@ -267,8 +267,39 @@ def get_verts_faces (latentForOptimization, window, component):
                             beta = networkSettings["beta"]).to(device)
 
         decoder.load_state_dict(torch.load("python/optimisation_funcs/model_confirugrations/bulkhead/NN1_ImplicitRepresentationDies_FinalTrained_NN1.pkl", map_location=device))
+       
+        #assemble uniform grid
+        marchingCubesResolution = 90
+        X, Y, Z = np.mgrid[0:1:complex(marchingCubesResolution), 0:1:complex(marchingCubesResolution), -0.5:0.5:complex(marchingCubesResolution)]
+        inputPoints = np.vstack([X.ravel(), Y.ravel(), Z.ravel()]).T
+        inputPoints = torch.tensor(inputPoints).float().to(device) 
+        numGridPoints = inputPoints.shape[0]
+
+        z = []
+
+        for i,pnts in enumerate(torch.split(inputPoints,100000,dim=0)):
+        # for i,pnts in enumerate(torch.split(inputPoints,1,dim=0)):
+
+            latentInputs = latentForOptimization.expand(pnts.shape[0], -1)
+            # latentInputs = latentForOptimization
+            predictedSDF = decoder(latentInputs, pnts)
+            predictedSDF = predictedSDF.detach().cpu().numpy().squeeze()
+            z.append(predictedSDF)
+
+        z = np.concatenate(z,axis=0)
+        z = z.astype(np.float64)
+        z = z.reshape(marchingCubesResolution, marchingCubesResolution, marchingCubesResolution)
+
+        #-------------------------------------------------------------------------------------
+        #1.2: Run marching cubes to extract the mesh
+        #-------------------------------------------------------------------------------------
+        verts, faces, _, _ = measure.marching_cubes(volume=z,level=0)
+        # verts, faces, _, _ = measure.marching_cubes(volume=z1,level=0.1) # changed
+
+        return verts, faces
     
     if component.lower() == "u-bending":
+        print("decoder for u-bending")
         hiddenLayerSizes = 128
         latentVectorLength = 64
         networkSettings = {
@@ -286,32 +317,42 @@ def get_verts_faces (latentForOptimization, window, component):
                             beta = networkSettings["beta"]).to(device)
         decoder.load_state_dict(torch.load("python/optimisation_funcs/model_confirugrations/u-bending/NN1_FinalTrained.pkl", map_location=device))
 
-    #assemble uniform grid
-    marchingCubesResolution = 90
-    X, Y, Z = np.mgrid[0:1:complex(marchingCubesResolution), 0:1:complex(marchingCubesResolution), -0.5:0.5:complex(marchingCubesResolution)]
-    inputPoints = np.vstack([X.ravel(), Y.ravel(), Z.ravel()]).T
-    inputPoints = torch.tensor(inputPoints).float().to(device) 
-    numGridPoints = inputPoints.shape[0]
+        # Define the ranges for x, y, and z
+        min_x, max_x = 0, 1
+        min_y, max_y = 0, 0.5
+        min_z, max_z = -0.5, 0.5
+        
+        refinementFactor = 1 #remember during optimisation, this must match what was used to generate the NN2 training input images
+        baseResolution = 90
+        nx, ny, nz = int(baseResolution*(max_x-min_x))*refinementFactor, int(baseResolution*(max_y-min_y))*refinementFactor, int(baseResolution*(max_z-min_z))*refinementFactor
+        
+        # Generate a regularly spaced grid of data points
+        x = np.linspace(min_x, max_x, nx)
+        y = np.linspace(min_y, max_y, ny)
+        z = np.linspace(min_z, max_z, nz)
+        xx, yy, zz = np.meshgrid(x, y, z, indexing='ij')
 
-    z = []
+        # Combine xx, yy, and zz into a single array
+        inputPoints = np.vstack((xx.ravel(), yy.ravel(), zz.ravel())).T
+        inputPoints = torch.tensor(inputPoints).float().to(device)
 
-    for i,pnts in enumerate(torch.split(inputPoints,100000,dim=0)):
-    # for i,pnts in enumerate(torch.split(inputPoints,1,dim=0)):
+        z = []
+        for _,pnts in enumerate(torch.split(inputPoints,100000,dim=0)):
 
-        latentInputs = latentForOptimization.expand(pnts.shape[0], -1)
-        # latentInputs = latentForOptimization
-        predictedSDF = decoder(latentInputs, pnts)
-        predictedSDF = predictedSDF.detach().cpu().numpy().squeeze()
-        z.append(predictedSDF)
+            latentInputs = latentForOptimization.expand(pnts.shape[0], -1)
+            predictedSDF = decoder(latentInputs, pnts)
+            predictedSDF = predictedSDF.detach().cpu().numpy().squeeze()
+            z.append(predictedSDF)
 
-    z1 = np.concatenate(z,axis=0)
-    z1 = z1.astype(np.float64)
-    z1 = z1.reshape(marchingCubesResolution, marchingCubesResolution, marchingCubesResolution)
+        z = np.concatenate(z,axis=0)
+        z = z.astype(np.float64)
+        z = z.reshape(nx, ny, nz)
+        # z = z.reshape(marchingCubesResolution, marchingCubesResolution, marchingCubesResolution)
 
-    #-------------------------------------------------------------------------------------
-    #1.2: Run marching cubes to extract the mesh
-    #-------------------------------------------------------------------------------------
-    verts, faces, _, _ = measure.marching_cubes(volume=z1,level=0)
-    # verts, faces, _, _ = measure.marching_cubes(volume=z1,level=0.1) # changed
+        #-------------------------------------------------------------------------------------
+        #1.2: Run marching cubes to extract the mesh
+        #-------------------------------------------------------------------------------------
+        verts, faces, _, _ = measure.marching_cubes(volume=z,level=0)
+        # verts, faces, _, _ = measure.marching_cubes(volume=z1,level=0.1) # changed
 
-    return verts, faces
+        return verts, faces

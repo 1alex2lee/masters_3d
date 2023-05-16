@@ -9,7 +9,7 @@ from PyQt6.QtGui import QStandardItem, QStandardItemModel
 import os
 
 from python import load, optimisation
-from python.windows import optimisation_setup2
+from python.windows import optimisation_setup2, developer, optimisation_results, prediction, sensitivity
 
 class Window(QMainWindow):
     def __init__ (self, *args, **kwargs):
@@ -59,6 +59,11 @@ class Window(QMainWindow):
         self.goal_buttongroup.setExclusive(True)
         
         self.update_process_dropdown()
+
+        self.action_prediction.triggered.connect(self.open_prediction_window)
+        self.action_optimisation.triggered.connect(self.open_optimisaiton_window)
+        self.action_sensitivity.triggered.connect(self.open_sensitivity_window)
+        self.action_developer.triggered.connect(self.open_developer_window)
 
     def update_process_dropdown (self):
         self.process_dropdown.clear()
@@ -116,3 +121,23 @@ class Window(QMainWindow):
         self.next_window = optimisation_setup2.Window(num_iterations=self.runsno_value.value(), file=self.file, active_component=self.component_dropdown.currentText())
         self.close()
         self.next_window.show()
+            
+    def open_prediction_window (self):
+        self.prediction_window = prediction.Window()
+        self.close()
+        self.prediction_window.show()   
+
+    def open_optimisaiton_window (self):
+        self.optimisation_window = optimisation_results.Window()
+        self.close()
+        self.optimisation_window.show()
+
+    def open_sensitivity_window (self):
+        self.sensitivity_window = sensitivity.Window()
+        self.close()
+        self.sensitivity_window.show()
+
+    def open_developer_window (self):
+        self.developer_window = developer.DeveloperWindow()
+        self.close()
+        self.developer_window.show()
