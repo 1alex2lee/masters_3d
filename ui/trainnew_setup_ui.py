@@ -169,6 +169,7 @@ class Ui_main_window(object):
 
         self.component_dropdown = QComboBox(self.central_widget)
         self.component_dropdown.setObjectName(u"component_dropdown")
+        self.component_dropdown.setEditable(True)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.component_dropdown)
 
