@@ -48,11 +48,6 @@ def load (component, var1, var2, window):
         gridOfOnes = torch.ones_like(surrogateModelInput.squeeze()[2])
 
         def get_max_thinning (BHF, friction, clearance, thickness):
-            BHF = torch.tensor(surrogateModelInput.squeeze()[2].mean(), requires_grad=True)
-            friction = torch.tensor(surrogateModelInput.squeeze()[3].mean(), requires_grad=True)
-            clearance = torch.tensor(surrogateModelInput.squeeze()[4].mean(), requires_grad=True)
-            thickness = torch.tensor(surrogateModelInput.squeeze()[5].mean(), requires_grad=True)
-
             surrogateModelInput[:, 2, :, :] = BHF * gridOfOnes #BHF
             surrogateModelInput[:, 3, :, :] = friction * gridOfOnes #friction
             surrogateModelInput[:, 4, :, :] = clearance * gridOfOnes #clearance
