@@ -24,7 +24,7 @@ from pyqtgraph import AxisItem, GradientEditorItem
 from python.optimisation_funcs import manufacturingSurrogateModels_bulkhead
 from python.optimisation_funcs import manufacturingSurrogateModels_ubending
 
-device=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 def load (component, var1, var2, window):
     if component == "u-bending":
@@ -102,7 +102,6 @@ def load (component, var1, var2, window):
                 for v in var_linspace:
                     max_thinnings.append(get_max_thinning(midBHF, midFriction, midClearance, v))
                     
-            
             window.canvas.axes.clear()
             window.canvas.axes.plot(max_thinnings, var_linspace)
             window.canvas.axes.set_xlabel(var2)
