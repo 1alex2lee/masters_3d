@@ -40,7 +40,7 @@ class TrainProgressWindow (QMainWindow):
         self.begin_script1(component, target_dir)
 
         self.cancel_button.pressed.connect(self.cancel)
-        self.done_button.pressed.connect(self.close)
+        self.done_button.pressed.connect(self.done)
 
         self.canvas = MplCanvas(self, width=5, height=5, dpi=100)
         # self.canvas.axes.plot([0,1,2,3,4], [10,1,20,3,40])
@@ -180,6 +180,11 @@ class TrainProgressWindow (QMainWindow):
         self.stop.emit()
         self.status_label.setText("Training cancelled!")
 
+    def done (self):
+        self.developer_window = DeveloperWindow()
+        self.close()
+        self.developer_window.show()
+
 class TrainNewWindow (QMainWindow):
     def __init__(self):
         super(TrainNewWindow, self).__init__()
@@ -196,7 +201,7 @@ class TrainNewWindow (QMainWindow):
         self.epochs_slider.valueChanged.connect(self.epochs_changed)
         self.batchsize_slider.valueChanged.connect(self.batchsize_changed)
 
-        self.component_dropdown.addItems(["Bulkhead", "U-bending"])
+        self.component_dropdown.addItems(["Bulkhead", "U-bending", "Car Door Panel"])
 
         self.cancel_button.pressed.connect(self.close)
 
@@ -219,7 +224,7 @@ class TrainNewWindow (QMainWindow):
         self.target_selected = True
 
     def begin_training (self):
-        component = self.component_dropdown.currentText().lower()
+        component = self.component_dropdown.currentText()
         process = self.process_edit.text()
         material = self.process_edit.text()
         indicator = self.indicator_edit.text()
