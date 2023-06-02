@@ -18,14 +18,14 @@ class Window(QMainWindow):
         self.file = "temp/ubending.STL"
 
         # self.component_dropdown.addItems(load.components())
-        self.component_dropdown.addItems(["U-bending", "Bulkhead"])
+        self.component_dropdown.addItems(["U-bending"])
 
         self.component_dropdown.currentTextChanged.connect(self.update_process_dropdown)
         self.process_dropdown.currentTextChanged.connect(self.update_material_dropdown)
         self.material_dropdown.currentTextChanged.connect(self.update_indicator_dropdown)
         # self.indicator_dropdown.currentTextChanged.connect(self.select_model)
 
-        self.load_mesh_button.pressed.connect(lambda: self.load_mesh())
+        self.load_mesh_button.pressed.connect(self.load_mesh)
 
         self.objfunc_dropdown.addItems(["Chamfer Distance"])
 
@@ -88,26 +88,27 @@ class Window(QMainWindow):
 
     def load_mesh (self):
         self.file = QFileDialog.getOpenFileName(self, "Import Mesh", filter="STL file (*.stl);; STEP file (*.step)")[0]
-        selected_component = self.component_dropdown.currentText()
-        self.progress_label.setText("Geometry loading...")
-        # optimisation.load_mesh(self.file, self)
+        if self.file != "":
+            selected_component = self.component_dropdown.currentText()
+            self.progress_label.setText("Geometry loading...")
+            # optimisation.load_mesh(self.file, self)
 
-        # Step 2: Create a QThread object
-        self.thread = QThread()
-        # Step 3: Create a worker object
-        self.worker = optimisation.load_mesh_worker(self.file, self, selected_component)
-        # Step 4: Move worker to the thread
-        self.worker.moveToThread(self.thread)
-        # Step 5: Connect signals and slots
-        self.thread.started.connect(self.worker.run)
+            # Step 2: Create a QThread object
+            self.thread = QThread()
+            # Step 3: Create a worker object
+            self.worker = optimisation.load_mesh_worker(self.file, self, selected_component)
+            # Step 4: Move worker to the thread
+            self.worker.moveToThread(self.thread)
+            # Step 5: Connect signals and slots
+            self.thread.started.connect(self.worker.run)
 
-        self.worker.finished.connect(self.report_finished)
-        self.worker.finished.connect(self.thread.quit)
-        self.thread.finished.connect(self.thread.deleteLater)
+            self.worker.finished.connect(self.report_finished)
+            self.worker.finished.connect(self.thread.quit)
+            self.thread.finished.connect(self.thread.deleteLater)
 
-        self.worker.progress.connect(self.report_progress)
-        # Step 6: Start the thread
-        self.thread.start()
+            self.worker.progress.connect(self.report_progress)
+            # Step 6: Start the thread
+            self.thread.start()
 
     def report_finished (self):
         self.progress_label.setText("Geometry loaded successfully!")

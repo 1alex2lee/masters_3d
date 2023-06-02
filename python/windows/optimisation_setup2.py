@@ -120,13 +120,13 @@ class Window(QMainWindow):
         self.runsno_label.setText("Currently on iteration " + str(progress) + " out of " + str(self.num_iterations))
         self.progressBar.setValue(100 * (progress-1)/self.num_iterations)
 
-    def report_finished (self, component):
-        self.component = component
-        self.runsno_label.setText(f"{component} optimisation completed with {self.num_iterations} iterations")
+    def report_finished (self, text):
+        self.runsno_label.setText(text)
         self.progressBar.setValue(100)
         self.next_button.setEnabled(True)
 
     def show_result (self):
+        print(self.component)
         self.next_window = optimisation_results.Window(component=self.component)
         self.close()
         self.next_window.show()

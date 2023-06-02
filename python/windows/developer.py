@@ -46,6 +46,8 @@ class TrainProgressWindow (QMainWindow):
         # self.canvas.axes.plot([0,1,2,3,4], [10,1,20,3,40])
         self.grid.addWidget(self.canvas)
 
+        self.indicator_label.setText(f"{indicator} Model")
+
     stop = pyqtSignal()
 
     def begin_script1 (self, component, target_dir):
@@ -120,16 +122,16 @@ class TrainProgressWindow (QMainWindow):
     def dieimages_finished (self):
         self.dieimages_progressbar.setValue(100)
         self.status_label.setText("Training model...")
-        self.begin_train_disp(self.component, self.process, self.material, "Displacement", self.epochs_num, self.batch_size)
+        self.begin_train_disp(self.component, self.process, self.material, self.epochs_num, self.batch_size)
 
     def dieimages_progress (self, prog):
         self.dieimages_progressbar.setValue(prog)
 
-    def begin_train_disp (self, component, process, material, indicator, epochs_num, batch_size):
+    def begin_train_disp (self, component, process, material, epochs_num, batch_size):
         # Step 2: Create a QThread object
         self.thread4 = QThread()
         # Step 3: Create a worker object
-        self.worker = ReSEUNet_training.worker(component, process, material, indicator, epochs_num, batch_size, self)
+        self.worker = ReSEUNet_training.worker(component, process, material, "Displacement", epochs_num, batch_size, self)
         # Step 4: Move worker to the thread
         self.worker.moveToThread(self.thread4)
         # Step 5: Connect signals and slots
@@ -145,12 +147,12 @@ class TrainProgressWindow (QMainWindow):
 
     def train_disp_finished (self):
         self.disp_progressbar.setValue(100)
-        self.begin_train_thinning(self.component, self.process, self.material, "Thinning", self.epochs_num, self.batch_size)
+        self.begin_train_indicator(self.component, self.process, self.material, self.indicator, self.epochs_num, self.batch_size)
 
     def train_disp_progress (self, prog):
         self.disp_progressbar.setValue(prog)
 
-    def begin_train_thinning (self, component, process, material, indicator, epochs_num, batch_size):
+    def begin_train_indicator (self, component, process, material, indicator, epochs_num, batch_size):
         # Step 2: Create a QThread object
         self.thread5 = QThread()
         # Step 3: Create a worker object
@@ -169,12 +171,12 @@ class TrainProgressWindow (QMainWindow):
         self.thread5.start()
 
     def train_thinning_finished (self):
-        self.thinning_progressbar.setValue(100)
+        self.indicator_progressbar.setValue(100)
         self.status_label.setText("Training complete!")
         self.done_button.setEnabled(True)
 
     def train_thinning_progress (self, prog):
-        self.thinning_progressbar.setValue(prog)
+        self.indicator_progressbar.setValue(prog)
 
     def cancel (self):
         self.stop.emit()
@@ -199,7 +201,9 @@ class TrainNewWindow (QMainWindow):
         self.target_selected = False
 
         self.epochs_slider.valueChanged.connect(self.epochs_changed)
+        self.epochs_spinbox.valueChanged.connect(self.epochs_changed)
         self.batchsize_slider.valueChanged.connect(self.batchsize_changed)
+        self.batchsize_spinbox.valueChanged.connect(self.batchsize_changed)
 
         self.component_dropdown.addItems(["Bulkhead", "U-bending", "Car Door Panel"])
 
@@ -238,32 +242,34 @@ class TrainNewWindow (QMainWindow):
         self.next_window.show()
 
     def epochs_changed (self, val):
-        self.epochs_number.setText(str(val))
+        self.epochs_spinbox.setValue(val)
+        self.epochs_slider.setValue(val)
 
     def batchsize_changed (self, val):
-        self.batchsize_number.setText(str(val))
+        self.batchsize_spinbox.setValue(val)
+        self.batchsize_slider.setValue(val)
         
 
-class TableModel(QAbstractTableModel):
-    def __init__(self, data):
-        super(TableModel, self).__init__()
-        self._data = data
+# class TableModel(QAbstractTableModel):
+#     def __init__(self, data):
+#         super(TableModel, self).__init__()
+#         self._data = data
 
-    def data(self, index, role):
-        if role == Qt.DisplayRole:
-            # See below for the nested-list data structure.
-            # .row() indexes into the outer list,
-            # .column() indexes into the sub-list
-            return self._data[index.row()][index.column()]
+#     def data(self, index, role):
+#         if role == Qt.DisplayRole:
+#             # See below for the nested-list data structure.
+#             # .row() indexes into the outer list,
+#             # .column() indexes into the sub-list
+#             return self._data[index.row()][index.column()]
 
-    def rowCount(self, index):
-        # The length of the outer list.
-        return len(self._data)
+#     def rowCount(self, index):
+#         # The length of the outer list.
+#         return len(self._data)
 
-    def columnCount(self, index):
-        # The following takes the first sub-list, and returns
-        # the length (only works if all rows are an equal length)
-        return len(self._data[0])
+#     def columnCount(self, index):
+#         # The following takes the first sub-list, and returns
+#         # the length (only works if all rows are an equal length)
+#         return len(self._data[0])
 
 
 class DeveloperWindow(QMainWindow):
@@ -275,17 +281,29 @@ class DeveloperWindow(QMainWindow):
         # self.trained_models_model = QStandardItemModel()
         # root_node = self.trained_models_model.invisibleRootItem()
 
-        trained_models = []
+        # trained_models = []
 
-        for component in [c for c in os.listdir("components") if c[0] != "."]:
-            # process_item = TreeItem(process)
-            # root_node.appendRow(process_item)
-            for material in [m for m in os.listdir(os.path.join("components", component)) if m[0] != "."]:
-                # material_item = TreeItem(material)
-                # process_item.appendRow(material_item)
-                for target in [t for t in os.listdir(os.path.join("components", component, material)) if t[0] != "."]:
-                    # material_item.appendRow(TreeItem(target))
-                    trained_models.append([component, material, target])
+        # def add_subfolders (path):
+        #     for subfolder in os.listdir(path):
+        #         if subfolder[0] != ".":
+        #             subfolder_path = os.path.join(path, subfolder)
+        #             if os.listdir(subfolder_path) != []:
+        #                 add_subfolders(subfolder_path)
+        #             else:
+        #                 trained_models.append([component, material, target])
+
+
+        # for component in [c for c in os.listdir("components") if c[0] != "."]:
+        #     # process_item = TreeItem(process)
+        #     # root_node.appendRow(process_item)
+        #     if os.listdir(os.path.join("components", component)) != []:
+        #         for material in [m for m in os.listdir(os.path.join("components", component)) if m[0] != "."]:
+        #             # material_item = TreeItem(material)
+        #             # process_item.appendRow(material_item)
+
+        #             for target in [t for t in os.listdir(os.path.join("components", component, material)) if t[0] != "."]:
+        #                 # material_item.appendRow(TreeItem(target))
+        #                 trained_models.append([component, material, target])
 
         # self.model_tree.setModel(self.trained_models_model)
         # self.model_tree.expandAll()
@@ -294,9 +312,9 @@ class DeveloperWindow(QMainWindow):
 
         self.load_project_structure ("components", self.model_tree)
 
-        self.trained_models_model = TableModel(trained_models)
-        self.model_table.setModel(self.trained_models_model)
-        self.model_table.setShowGrid(False)
+        # self.trained_models_model = TableModel(trained_models)
+        # self.model_table.setModel(self.trained_models_model)
+        # self.model_table.setShowGrid(False)
 
         self.delete_button.pressed.connect(lambda: self.delete_treeitem(self.model_tree.selectedIndexes()))
 
