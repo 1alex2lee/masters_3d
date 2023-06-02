@@ -24,12 +24,12 @@ from python.windows import sensitivity
 if __name__ == '__main__':
     # app = QtWidgets.QApplication(sys.argv)
     app = QApplication(sys.argv)
-    # prediction = prediction.Window()
+    main = prediction.Window()
     # main = optimisation_setup.Window()
     # main = optimisation_setup2.Window()
     # main = optimisation_results.Window()
     # main = developer.DeveloperWindow()
-    main = developer.TrainNewWindow()
+    # main = developer.TrainNewWindow()
     # main = sensitivity.Window()
     
     # input = np.load("temp/input.npy")
