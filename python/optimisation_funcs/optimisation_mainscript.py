@@ -48,7 +48,7 @@ class worker(QObject):
     # def __init__ (self, num_iterations=100, *args, **kwargs):
         self.num_iterations = num_iterations
         self.file = file
-        self.component = component.lower()
+        self.component = component
         self.window = window
         self.cancelled = False
         self.window.cancel.connect(self.stop)
@@ -62,11 +62,10 @@ class worker(QObject):
 
     def run (self):
 
-        if self.component == "bulkhead":
+        if self.component.lower() == "bulkhead":
 
             #hyperparameters optimisation
             random_seed = 37
-            num_iterations = self.num_iterations
             refLengthDies = 600 #mm
 
             chamfer_lambda = 1e2 #lambda0
@@ -292,18 +291,12 @@ class worker(QObject):
             ########################################################################################
             # ----- Optimisation Loop ------
             ########################################################################################
-            for e in range(num_iterations):
+            for e in range(self.num_iterations):
 
                 ######################################################################################
                 # UPDATE PROGRESS IN QT
-                ######################################################################################
-
                 self.progress.emit(e + 1)
-
-                if self.cancelled:
-                    self.finished.emit("Stopped early!")
-                    break
-
+                ######################################################################################
 
                 optimizer.zero_grad() #set all gradients to 0 so they do not accumulate
 
@@ -614,13 +607,15 @@ class worker(QObject):
                 # plt.legend(["Chamfer Loss", "Height Loss","Manufacturing Constraint Loss", "Similarity Loss"])
                 # plt.title("Performance history")
                 # plt.show()
-                self.window.canvas.axes.plot(runningIterations, runningChamferLoss)
-                self.window.canvas.axes.plot(runningIterations, runningHeightLoss)
-                self.window.canvas.axes.plot(runningIterations, runningManufacturingConstraintLoss)
-                self.window.canvas.axes.plot(runningIterations, runningSimilarityMSELoss)
+                self.window.canvas.axes.clear()
+                self.window.canvas.axes.plot(runningIterations, runningChamferLoss, label='Chamfer Loss')
+                self.window.canvas.axes.plot(runningIterations, runningHeightLoss, label='Height Loss')
+                self.window.canvas.axes.plot(runningIterations, runningManufacturingConstraintLoss, label='Manufacturing Constraint Loss')
+                self.window.canvas.axes.plot(runningIterations, runningSimilarityMSELoss, label='Similarity Loss')
                 self.window.canvas.axes.set_xlabel("Iterations")
                 self.window.canvas.axes.set_ylabel("Losses")
-                self.window.canvas.axes.legend(["Chamfer Loss", "Height Loss","Manufacturing Constraint Loss", "Similarity Loss"])
+                # self.window.canvas.axes.legend(["Chamfer Loss", "Height Loss","Manufacturing Constraint Loss", "Similarity Loss"])
+                self.window.canvas.axes.legend(loc='upper left')
                 self.window.canvas.axes.set_title("Performance history")
                 self.window.canvas.draw()
                 # self.window.canvas.axes.show()
@@ -663,6 +658,14 @@ class worker(QObject):
                 latentVectorsForPlotting.append((e, torch.clone(latentForOptimization)))
                 thinningFieldsForPlotting.append((e, thinningField.detach().cpu().numpy().squeeze()))
 
+                # Check if Qt cancelled
+                if self.cancelled:
+                    self.finished.emit(f"Stopped early after iteration {e+1}")
+                    break
+                if e+1 == self.num_iterations:
+                    # Tell Qt it's done
+                    self.finished.emit(f"Finished Bulkhead optimisation with {self.num_iterations} iterations")
+
                 # break
 
             ######################################################################################
@@ -672,20 +675,18 @@ class worker(QObject):
             #-------------------------------------------------------------------------------------
             #5.0: Store .gif
             #-------------------------------------------------------------------------------------
-            if plotGIFhere:
-
-                #thinning GIF
-                with imageio.get_writer(thinningGIFNames, mode='I') as writer:
-                    for filename in thinningGIFNames:
-                        image = imageio.imread(filename)
-                        writer.append_data(image)
-
-                #remove files
-                for filename in set(thinningGIFNames):
-                    os.remove(filename)
+            # if plotGIFhere:
+            #     #thinning GIF
+            #     with imageio.get_writer(thinningGIFNames, mode='I') as writer:
+            #         for filename in thinningGIFNames:
+            #             image = imageio.imread(filename)
+            #             writer.append_data(image)
+            #     #remove files
+            #     for filename in set(thinningGIFNames):
+            #         os.remove(filename)
 
             #save for plotting
-            outputPath = os.path.join("temp", "Optimisation", "OptimisationOutputs", "bulkhead")
+            outputPath = os.path.join("temp", "Optimisation", "OptimisationOutputs", "Bulkhead")
             if not os.path.exists(outputPath):
                 os.makedirs(outputPath)
 
@@ -695,19 +696,13 @@ class worker(QObject):
             torch.save(latentVectorsForPlotting, latentVectorsForPlottingName)
             torch.save(thinningFieldsForPlotting, thinningFieldsForPlottingName)
 
-            ######################################################################################
-            # Tell Qt it's done
-            ######################################################################################
-            self.finished.emit('bulkhead')
-
             print("Done.")
 
 ##########################################################################################################################################
 # U-bending
 ##########################################################################################################################################
 
-        if self.component == "u-bending":
-
+        if self.component.lower() == "u-bending":
             #hyperparameters optimisation
             random_seed = 37
             refLengthDies = 600 #mm
@@ -1127,13 +1122,8 @@ class worker(QObject):
 
                 ######################################################################################
                 # UPDATE PROGRESS IN QT
-                ######################################################################################
-
                 self.progress.emit(e + 1)
-
-                if self.cancelled:
-                    self.finished.emit("Stopped early!")
-                    break
+                ######################################################################################
 
                 optimizer.zero_grad() #set all gradients to 0 so they do not accumulate
 
@@ -1440,15 +1430,34 @@ class worker(QObject):
                 #-------------------------------------------------------------------------------------
                 #2.9: Plot optimisation progress
                 #-------------------------------------------------------------------------------------
-                self.window.canvas.axes.plot(runningIterations, runningBHF)
-                self.window.canvas.axes.plot(runningIterations, runningFriction)
-                self.window.canvas.axes.plot(runningIterations, runningClearance)
-                self.window.canvas.axes.plot(runningIterations, runningThickness)
+                self.window.canvas.axes.clear()
+                # self.window.canvas.axes.plot(runningIterations, runningBHF, label="BHF")
+                # self.window.canvas.axes.plot(runningIterations, runningFriction, label="Friction")
+                # self.window.canvas.axes.plot(runningIterations, runningClearance, label="Clerance")
+                # self.window.canvas.axes.plot(runningIterations, runningThickness, label="Thickness")
+                # self.window.canvas.axes.set_xlabel("Iterations")
+                # self.window.canvas.axes.set_ylabel("Normalised parameter value")
+                # # self.window.canvas.axes.legend(["BHF", "Friction", "Clearance", "Thickness"])
+                # self.window.canvas.axes.legend()
+                self.window.canvas.axes.plot(runningIterations, runningManufacturingConstraintLoss, label="Manufacturing Constraint Loss")
+                self.window.canvas.axes.plot(runningIterations, runningSpringbackLoss, label="Geometric loss")
+                self.window.canvas.axes.plot(runningIterations, runningSimilarityMSELoss, label="Similarity MSE Loss")
                 self.window.canvas.axes.set_xlabel("Iterations")
-                self.window.canvas.axes.set_ylabel("Normalised parameter value")
-                self.window.canvas.axes.legend(["BHF", "Friction", "Clearance", "Thickness"])
-                # self.window.canvas.axes.set_title("Performance history")
+                self.window.canvas.axes.set_ylabel("Log10(Losses)")
+                # self.window.canvas.axes.legend(["BHF", "Friction", "Clearance", "Thickness"])
+                self.window.canvas.axes.legend(loc="upper left")
+                self.window.canvas.axes.set_title("Performance history")
                 self.window.canvas.draw()
+
+                # #plot losses
+                # plt.plot(runningIterations, runningManufacturingConstraintLoss)
+                # plt.plot(runningIterations, runningSpringbackLoss)
+                # # plt.plot(runningIterations, runningSimilarityMSELoss)
+                # # plt.plot(runningIterations, runningMeanThinningFieldMasked)
+                # plt.xlabel("Iterations")
+                # plt.ylabel("Log10(Losses)")
+                # plt.legend(["Manufacturing Constraint Loss", "Geometric loss"])
+                # plt.show()
 
                 if (e == 0) or (int(e+1) % 10 == 0):
 
@@ -1642,9 +1651,9 @@ class worker(QObject):
                     #     plt.show()
                 
                     #-------------------------------------------------------------------------------------
-                    print("Learning rate:", optimizer.param_groups[-1]["lr"])
-                    print("DONE Iteration:", e)
-                    print("==============================================================================================================================")
+                    # print("Learning rate:", optimizer.param_groups[-1]["lr"])
+                    # print("DONE Iteration:", e)
+                    # print("==============================================================================================================================")
 
                 #-------------------------------------------------------------------------------------
                 #2.10: Save other things at intervals for plotting
@@ -1652,6 +1661,14 @@ class worker(QObject):
                 # if e in iterationsToPlot:
                 latentVectorsForPlotting.append((e, torch.clone(latentForOptimization)))
                 thinningFieldsForPlotting.append((e, thinningField.detach().cpu().numpy().squeeze()))
+
+                # Check if Qt cancelled
+                if self.cancelled:
+                    self.finished.emit(f"Stopped early after iteration {e+1}!")
+                    break
+                if e+1 == self.num_iterations:
+                    # Tell Qt it's done
+                    self.finished.emit(f"Finished U-bending optimisation with {self.num_iterations} iterations")
 
             # break
 
@@ -1679,13 +1696,21 @@ class worker(QObject):
             #       os.remove(filename)
 
             # #save for plotting
-            outputPath = os.path.join("temp", "Optimisation", "OptimisationOutputs", "u-bending")
+            outputPath = os.path.join("temp", "Optimisation", "OptimisationOutputs", "U-bending")
             if not os.path.exists(outputPath):
                 os.makedirs(outputPath)
             latentVectorsForPlottingName = os.path.join(outputPath, "LatentVectorsForPlotting.pkl")
             thinningFieldsForPlottingName = os.path.join(outputPath, "ThinningFieldsForPlotting.pkl")
             torch.save(latentVectorsForPlotting, latentVectorsForPlottingName)
             torch.save(thinningFieldsForPlotting, thinningFieldsForPlottingName)
+
+            outputPath = os.path.join(outputPath, "variables")
+            if not os.path.exists(outputPath):
+                os.makedirs(outputPath)
+            torch.save(runningBHF, os.path.join(outputPath, "BHF"))
+            torch.save(runningFriction, os.path.join(outputPath, "friction"))
+            torch.save(runningClearance, os.path.join(outputPath, "clearance"))
+            torch.save(runningThickness, os.path.join(outputPath, "thickness"))
 
             # lossHistoryDictionary = {"runningIterations" : runningIterations,
             #                     "runningTotalBackwardLoss" : runningTotalBackwardLoss,
@@ -1700,11 +1725,6 @@ class worker(QObject):
 
             # torch.save(lossHistoryDictionary, lossHistoriesFileName)
             # torch.save(performanceHistoryDictionary, performanceHistoriesFileName)
-
-            ######################################################################################
-            # Tell Qt it's done
-            ######################################################################################
-            self.finished.emit("u-bending")
 
             print("Done.")
 
