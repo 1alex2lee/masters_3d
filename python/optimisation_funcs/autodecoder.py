@@ -30,7 +30,7 @@ def get_latent_vector(surfacePoints_all, surfaceNormals_all, offSurfacePoints_al
     # learningRate_latent = 0.00001 #to get nice figure for paper
     LrReductionInterval = 200
     # num_iterations= 300 #actually used
-    num_iterations= 10
+    num_iterations= 5
     # num_iterations = 500  # to get nice figure for paper
 
     if component.lower() == "bulkhead":
