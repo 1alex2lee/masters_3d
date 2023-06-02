@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 from stl import mesh
 from scipy.interpolate import griddata
 from pyqtgraph import ColorMap, ColorBarItem, mkColor, AxisItem, GradientEditorItem
-from pyqtgraph.opengl import MeshData, GLScatterPlotItem, GLMeshItem
+from pyqtgraph.opengl import MeshData, GLScatterPlotItem, GLMeshItem, GLAxisItem
+from PyQt6 import QtGui
 from scipy.spatial import Delaunay
 import open3d as o3d
 import cadquery as cq
@@ -20,17 +21,16 @@ y_resolution = 256
 y_zoom_start, y_zoom_end = 0.425, 0.175
 disp_scalar = 208
 file = o3dmesh = ""
-die_shape = die_shape_zoom = disp = data_colours = []
+die_shape = die_shape_zoom = disp = data_colours = blank_shape = []
 
-def load_mesh (file_path, window):
-    global file, o3dmesh, die_shape, die_shape_zoom, disp, data_colours
+def load_mesh (file_path, window, L1, L2):
+    global file, o3dmesh, die_shape, die_shape_zoom, disp, data_colours, blank_shape
     file = file_path
     file_ext = file.split(".")[-1].lower()
     # load displacement model
-    model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), 
-                            "Displacement")
+    model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), "Displacement (mm)")
 
-    print(file_ext)
+    # print(file_ext)
 
     if file_ext == "stl":
         stl = mesh.Mesh.from_file(file)
@@ -62,14 +62,24 @@ def load_mesh (file_path, window):
                         method='linear', fill_value=0)
     input[1,:,:] = die_shape_zoom
     # input channel 3 (blank shape)
+    L1 = L1/800 * y_resolution
+    L2 = L2/800 * y_resolution
+    # Calculate the slope of the line
+    slope = ((L1 - L2)/x_resolution)
+    # Iterate over each row and interpolate the values
     input[2,:,:] = 1
+    for x in range(x_resolution - 1):
+        edge_length = int(x * slope + L2)
+        input[2, edge_length:, x] = 0
+    blank_shape = input[2,...]
+    # make prediction
     disp = model_control.predict(input)
     disp_min, disp_max = np.amin(disp), np.amax(disp)
     x, y = np.meshgrid(np.arange(disp[0].shape[1]), np.arange(disp[0].shape[0]))
     x = x/np.max(x) * 1200  # convert to mm
     y = y/np.max(y) * 800  # convert to mm
-    x = x + disp[0]  # apply displacement
-    y = y + disp[1]  # apply displacement
+    x = np.add(x, disp[0])  # apply displacement
+    y = np.add(y, disp[1])  # apply displacement
     z = -disp[2]  # z height (displacement only)
     points = np.stack((x, y, z), axis=-1).reshape(-1,3)
     # Use Open3D to plot smooth surface
@@ -78,17 +88,16 @@ def load_mesh (file_path, window):
     # Create and estimate normals
     pcd.normals =  o3d.utility.Vector3dVector(np.zeros((1,3)))
     pcd.estimate_normals()
-    o3dmesh, densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(
-        pcd, depth=9)
+    o3dmesh, densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(pcd, depth=9)
 
     # load selected model
     selected_indicator = window.indicator_dropdown.currentText()
     
     # predict value and apply colour map
-    if selected_indicator == "Displacement":
+    if "displacement" in selected_indicator.lower():
         plot_displacement(window)
 
-    elif selected_indicator == "Thinning":
+    elif "thinning" in selected_indicator.lower():
         plot_thinning(window)
 
 
@@ -98,9 +107,9 @@ def change_model (window):
     selected_indicator = window.indicator_dropdown.currentText()
     model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), selected_indicator)
     if die_shape != []:
-        if selected_indicator == "Thinning":
+        if "thinning" in selected_indicator.lower():
             plot_thinning(window)
-        elif selected_indicator == "Displacement":
+        elif "displacement" in selected_indicator.lower():
             plot_displacement(window)
             
 
@@ -116,6 +125,8 @@ def add_items (ax, gw, window):
     meshdata = MeshData(vertexes=np.asarray(o3dmesh.vertices), faces=np.asarray(o3dmesh.triangles), vertexColors=o3dcolours)
     meshitem = GLMeshItem(meshdata=meshdata, drawFaces=True, drawEdges=False)
     window.main_view.clear()
+    axis = GLAxisItem(size=QtGui.QVector3D(2000,2000,2000), glOptions="opaque")
+    window.main_view.addItem(axis)
     window.main_view.addItem(meshitem)
     window.GraphicsLayoutWidget.clear()
     window.GraphicsLayoutWidget.addItem(ax)
@@ -137,7 +148,7 @@ def plot_displacement (window):
                 x = round(point[1]/o3dpointx_max[1] * 255)
                 data_colours.append((disp[0, x, y] - disp_min)/(disp_max - disp_min))
             ax = AxisItem("left")
-            ax.setLabel(text="Displacement (X)", units="mm")
+            ax.setLabel(text="X Displacement", units="mm")
             ax.setRange(disp_min, disp_max)
 
         elif selected_direction == "Y":
@@ -150,7 +161,7 @@ def plot_displacement (window):
                 x = round(point[1]/o3dpointx_max[1] * 255)
                 data_colours.append((disp[1, x, y] - disp_min)/(disp_max - disp_min))
             ax = AxisItem("left")
-            ax.setLabel(text="Displacement (Y)", units="mm")
+            ax.setLabel(text="Y Displacement", units="mm")
             ax.setRange(disp_min, disp_max)
 
         elif selected_direction == "Z":
@@ -163,7 +174,7 @@ def plot_displacement (window):
                 x = round(point[1]/o3dpointx_max[1] * 255)
                 data_colours.append((disp[2, x, y] - disp_min)/(disp_max - disp_min))
             ax = AxisItem("left")
-            ax.setLabel(text="Displacement (Z)", units="mm")
+            ax.setLabel(text="Z Displacement", units="mm")
             ax.setRange(disp_min, disp_max)
 
         else:
@@ -177,19 +188,18 @@ def plot_displacement (window):
                 x = round(point[1]/o3dpointx_max[1] * 255)
                 data_colours.append((disp_total[x, y] - disp_min)/(disp_max - disp_min))
             ax = AxisItem("left")
-            ax.setLabel(text="Displacement (Total)", units="mm")
+            ax.setLabel(text="Total Displacement", units="mm")
             ax.setRange(disp_min, disp_max)
 
         gw = GradientEditorItem(orientation="right")
-        GradientMode = {'ticks': [(0, (0,255,0,255)), (0.5, (0,0,255,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
+        GradientMode = {'ticks': [(0, (0,0,255,255)), (0.5, (0,255,0,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
         gw.restoreState(GradientMode)
         add_items(ax, gw, window)
 
 
 def plot_thinning (window):
     global o3dmesh, die_shape, die_shape_zoom, disp, data_colours
-    model_control.load_model(window.process_dropdown.currentText(), window.material_dropdown.currentText(), 
-                                "Thinning")
+    model_control.load_model(window.component_dropdown.currentText(), window.process_dropdown.currentText(), window.material_dropdown.currentText(), "Thinning (%)")
         
     input = np.zeros((5,y_resolution,x_resolution))
     # input channels 1 and 3 (die and punch shape)
@@ -197,35 +207,43 @@ def plot_thinning (window):
     # input channels 2 and 4 (zoomed die and punch shape)
     input[1,:,:] = input[3,:,:] = die_shape_zoom
     # input channel 5 (blank shape)
-    input[4,:,:] = 1
+    input[4,:,:] = blank_shape
     # predict using model
     pred = model_control.predict(input)
-    thinning = pred[0,:]
+    thinning = pred[0,:] * 100
+    # thinning -= thinning.min()
 
     np.save("temp/input.npy", input)
     np.save("temp/thinning.npy", pred)
 
     thinning_max = np.amax(thinning)
     thinning_min = np.amin(thinning)
-    o3dpoints = np.asarray(o3dmesh.vertices)
     data_colours = []
+
+    o3dpoints = np.asarray(o3dmesh.vertices)
+    o3dpoints[:,0] -= np.min(o3dpoints[:,0])
+    o3dpoints[:,1] -= np.min(o3dpoints[:,1])
     o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
+
     for point in o3dpoints:
-        y = round(point[0]/o3dpointx_max[0] * 383)
-        x = round(point[1]/o3dpointx_max[1] * 255)
-        if x == 383:
-            for i in range(8):
-                data_colours.append(0)
-        elif y == 255:
-            for i in range(20):
-                data_colours.append(0)
-        else:
-            data_colours.append((thinning[x, y] - thinning_min)/(thinning_max - thinning_min))
+        x = math.floor(point[0]/o3dpointx_max[0] * (thinning.shape[0] - 1))
+        y = math.floor(point[1]/o3dpointx_max[1] * (thinning.shape[1] - 1))
+        # if x == 383:
+        #     for i in range(8):
+        #         data_colours.append(0)
+        # elif y == 255:
+        #     for i in range(20):
+        #         data_colours.append(0)
+        # else:
+            # data_colours.append((thinning[x, y] - thinning_min)/(thinning_max - thinning_min))
+        data_colours.append(thinning[x, y])
+    data_colours = np.array(data_colours)
+    data_colours -+ np.amin(data_colours)
     ax = AxisItem("left")
-    ax.setLabel(text="Thinning")
-    ax.setRange(thinning_min, thinning_max)
+    ax.setLabel(text="Thinning (%)")
+    ax.setRange(np.amin(data_colours), np.amax(data_colours))
     
     gw = GradientEditorItem(orientation="right")
-    GradientMode = {'ticks': [(0, (0,255,0,255)), (0.5, (0,0,255,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
+    GradientMode = {'ticks': [(0, (0,0,255,255)), (0.5, (0,255,0,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
     gw.restoreState(GradientMode)
     add_items(ax, gw, window)

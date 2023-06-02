@@ -20,7 +20,7 @@ def load_model (component, process, material, indicator):
 
     model_dir = os.path.join(os.getcwd(), "components", component, process, material)
 
-    if indicator == "Thinning":
+    if "thinning" in indicator.lower():
         model = ResUNet(num_channel,batch_size, 5, 4, 2)
         model = model.to(device)
     else:

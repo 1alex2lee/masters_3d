@@ -23,6 +23,10 @@ def materials (component, process):
 
 
 def indicators (component, process, material):
+    # if "car door panel" in component.lower():
+    #     return ["Displacement (mm)"]
+    # if "u-bending" in component.lower():
+    #     return ["Thinning (%)","Displacement (mm)"]
     return [ indicator for indicator in os.listdir(os.path.join("components", component, process, material)) if indicator[0] != "." ]
 
 
@@ -34,105 +38,105 @@ def indicators (component, process, material):
 # LEGACY
 #-------------------------------------------------------------------------------------
 
-def process_inputs ():
-    global selected_component
+# def process_inputs ():
+#     global selected_component
 
-    with open('info.json') as f:
-        info = json.load(f)
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_component:
-                return [ input["name"] for input in process["inputs"] ]
+#         for process in info["processes"]:
+#             if process["name"] == selected_component:
+#                 return [ input["name"] for input in process["inputs"] ]
         
 
-def process_input_units (input_name):
-    global selected_component
+# def process_input_units (input_name):
+#     global selected_component
 
-    with open('info.json') as f:
-        info = json.load(f)
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_component:
-                for input in process["inputs"]:
-                    if input["name"] == input_name:
-                        return input["units"]
+#         for process in info["processes"]:
+#             if process["name"] == selected_component:
+#                 for input in process["inputs"]:
+#                     if input["name"] == input_name:
+#                         return input["units"]
                     
 
-def process_input_lowerbound (input_name):
-    global selected_component
+# def process_input_lowerbound (input_name):
+#     global selected_component
 
-    with open('info.json') as f:
-        info = json.load(f)
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_component:
-                for input in process["inputs"]:
-                    if input["name"] == input_name:
-                        return input["lower bound"]
+#         for process in info["processes"]:
+#             if process["name"] == selected_component:
+#                 for input in process["inputs"]:
+#                     if input["name"] == input_name:
+#                         return input["lower bound"]
                     
                     
-def process_input_upperbound (input_name):
-    global selected_component
+# def process_input_upperbound (input_name):
+#     global selected_component
 
-    with open('info.json') as f:
-        info = json.load(f)
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_component:
-                for input in process["inputs"]:
-                    if input["name"] == input_name:
-                        return input["upper bound"]
+#         for process in info["processes"]:
+#             if process["name"] == selected_component:
+#                 for input in process["inputs"]:
+#                     if input["name"] == input_name:
+#                         return input["upper bound"]
                     
                     
-def process_input_decimals (input_name):
-    global selected_component
+# def process_input_decimals (input_name):
+#     global selected_component
 
-    with open('info.json') as f:
-        info = json.load(f)
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == selected_component:
-                for input in process["inputs"]:
-                    if input["name"] == input_name:
-                        return input["decimals"]
+#         for process in info["processes"]:
+#             if process["name"] == selected_component:
+#                 for input in process["inputs"]:
+#                     if input["name"] == input_name:
+#                         return input["decimals"]
 
 
-def process_outputs (process_name):
-    with open('info.json') as f:
-        info = json.load(f)
+# def process_outputs (process_name):
+#     with open('info.json') as f:
+#         info = json.load(f)
 
-        for process in info["processes"]:
-            if process["name"] == process_name:
-                return [ output["name"] for output in process["outputs"] ]
+#         for process in info["processes"]:
+#             if process["name"] == process_name:
+#                 return [ output["name"] for output in process["outputs"] ]
             
 
-    # return [ model["outputs"] if model["name"] for model in info["models"] == model_type  ]
+#     # return [ model["outputs"] if model["name"] for model in info["models"] == model_type  ]
 
 
-def select_materialandprocess (material, process):
-    global selected_component, selected_material
+# def select_materialandprocess (material, process):
+#     global selected_component, selected_material
 
-    selected_material = material
-    selected_component = process
+#     selected_material = material
+#     selected_component = process
 
-    model_control.selectMaterialandProcess(material, process)
-
-
-def get_selected_materialandprocess ():
-    global selected_component, selected_material
-
-    return selected_component, selected_material
+#     model_control.selectMaterialandProcess(material, process)
 
 
-def optivaropts ():
-    return (["python","python1","python2"])
+# def get_selected_materialandprocess ():
+#     global selected_component, selected_material
+
+#     return selected_component, selected_material
 
 
-def independentvars ():
-    return (["sensitivity","independent","variables"])
+# def optivaropts ():
+#     return (["python","python1","python2"])
 
 
-def dependentvars ():
-    return (["sensitivity","dependent","variables"])
+# def independentvars ():
+#     return (["sensitivity","independent","variables"])
+
+
+# def dependentvars ():
+#     return (["sensitivity","dependent","variables"])
 
 
