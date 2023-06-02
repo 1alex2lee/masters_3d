@@ -17,14 +17,15 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QFormLayout, QGridLayout, QLabel,
-    QMainWindow, QMenu, QMenuBar, QProgressBar,
-    QPushButton, QSizePolicy, QStatusBar, QWidget)
+    QLayout, QMainWindow, QMenu, QMenuBar,
+    QProgressBar, QPushButton, QSizePolicy, QStatusBar,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(390, 563)
+        MainWindow.resize(584, 624)
         self.action_prediction = QAction(MainWindow)
         self.action_prediction.setObjectName(u"action_prediction")
         self.action_optimisation = QAction(MainWindow)
@@ -41,6 +42,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(10, 10, 10, 10)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setSizeConstraint(QLayout.SetMinimumSize)
         self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         self.resultimages_label = QLabel(self.centralwidget)
         self.resultimages_label.setObjectName(u"resultimages_label")
@@ -81,10 +83,10 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.disp_label)
 
-        self.thinning_label = QLabel(self.centralwidget)
-        self.thinning_label.setObjectName(u"thinning_label")
+        self.indicator_label = QLabel(self.centralwidget)
+        self.indicator_label.setObjectName(u"indicator_label")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.thinning_label)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.indicator_label)
 
         self.disp_progressbar = QProgressBar(self.centralwidget)
         self.disp_progressbar.setObjectName(u"disp_progressbar")
@@ -92,11 +94,11 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.disp_progressbar)
 
-        self.thinning_progressbar = QProgressBar(self.centralwidget)
-        self.thinning_progressbar.setObjectName(u"thinning_progressbar")
-        self.thinning_progressbar.setValue(0)
+        self.indicator_progressbar = QProgressBar(self.centralwidget)
+        self.indicator_progressbar.setObjectName(u"indicator_progressbar")
+        self.indicator_progressbar.setValue(0)
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.thinning_progressbar)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.indicator_progressbar)
 
 
         self.gridLayout.addLayout(self.formLayout, 1, 0, 1, 2)
@@ -108,6 +110,7 @@ class Ui_MainWindow(object):
 
         self.grid = QGridLayout()
         self.grid.setObjectName(u"grid")
+        self.grid.setSizeConstraint(QLayout.SetMaximumSize)
 
         self.gridLayout.addLayout(self.grid, 4, 0, 1, 2)
 
@@ -157,7 +160,7 @@ class Ui_MainWindow(object):
         self.script2_label.setText(QCoreApplication.translate("MainWindow", u"Obtain target images", None))
         self.dieimages_label.setText(QCoreApplication.translate("MainWindow", u"Obtain input die images", None))
         self.disp_label.setText(QCoreApplication.translate("MainWindow", u"Displacement Model", None))
-        self.thinning_label.setText(QCoreApplication.translate("MainWindow", u"Thinning Model", None))
+        self.indicator_label.setText(QCoreApplication.translate("MainWindow", u"Thinning Model", None))
         self.cancel_button.setText(QCoreApplication.translate("MainWindow", u"Cancel", None))
         self.done_button.setText(QCoreApplication.translate("MainWindow", u"Done", None))
         self.status_label.setText(QCoreApplication.translate("MainWindow", u"Preparing data...", None))

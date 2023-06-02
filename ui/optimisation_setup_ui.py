@@ -68,7 +68,7 @@ class Ui_MainWindow(object):
 
         self.process_dropdown = QComboBox(self.centralwidget)
         self.process_dropdown.setObjectName(u"process_dropdown")
-        self.process_dropdown.setEnabled(False)
+        self.process_dropdown.setEnabled(True)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.process_dropdown)
 
@@ -79,7 +79,7 @@ class Ui_MainWindow(object):
 
         self.material_dropdown = QComboBox(self.centralwidget)
         self.material_dropdown.setObjectName(u"material_dropdown")
-        self.material_dropdown.setEnabled(False)
+        self.material_dropdown.setEnabled(True)
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.material_dropdown)
 
@@ -90,7 +90,7 @@ class Ui_MainWindow(object):
 
         self.indicator_dropdown = QComboBox(self.centralwidget)
         self.indicator_dropdown.setObjectName(u"indicator_dropdown")
-        self.indicator_dropdown.setEnabled(False)
+        self.indicator_dropdown.setEnabled(True)
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.indicator_dropdown)
 
@@ -137,7 +137,7 @@ class Ui_MainWindow(object):
 
         self.optimiser_dropdown = QComboBox(self.centralwidget)
         self.optimiser_dropdown.setObjectName(u"optimiser_dropdown")
-        self.optimiser_dropdown.setEnabled(False)
+        self.optimiser_dropdown.setEnabled(True)
 
         self.formLayout.setWidget(8, QFormLayout.FieldRole, self.optimiser_dropdown)
 

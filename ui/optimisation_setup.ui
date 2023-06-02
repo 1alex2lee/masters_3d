@@ -80,7 +80,7 @@
       <item row="1" column="1">
        <widget class="QComboBox" name="process_dropdown">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -94,7 +94,7 @@
       <item row="2" column="1">
        <widget class="QComboBox" name="material_dropdown">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -108,7 +108,7 @@
       <item row="3" column="1">
        <widget class="QComboBox" name="indicator_dropdown">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -176,7 +176,7 @@
       <item row="8" column="1">
        <widget class="QComboBox" name="optimiser_dropdown">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>

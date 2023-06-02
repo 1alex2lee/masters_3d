@@ -150,19 +150,6 @@
         </property>
        </widget>
       </item>
-      <item row="10" column="1">
-       <widget class="QLabel" name="epochs_number">
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>10000</string>
-        </property>
-       </widget>
-      </item>
       <item row="11" column="0" colspan="2">
        <widget class="QSlider" name="epochs_slider">
         <property name="minimumSize">
@@ -195,13 +182,6 @@
         </property>
        </widget>
       </item>
-      <item row="12" column="1">
-       <widget class="QLabel" name="batchsize_number">
-        <property name="text">
-         <string>60</string>
-        </property>
-       </widget>
-      </item>
       <item row="13" column="0" colspan="2">
        <widget class="QSlider" name="batchsize_slider">
         <property name="minimumSize">
@@ -211,16 +191,16 @@
          </size>
         </property>
         <property name="minimum">
-         <number>1</number>
+         <number>2</number>
         </property>
         <property name="maximum">
-         <number>120</number>
+         <number>512</number>
         </property>
         <property name="singleStep">
          <number>1</number>
         </property>
         <property name="value">
-         <number>60</number>
+         <number>32</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -231,6 +211,35 @@
        <widget class="QComboBox" name="component_dropdown">
         <property name="editable">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QSpinBox" name="epochs_spinbox">
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>20000</number>
+        </property>
+        <property name="value">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QSpinBox" name="batchsize_spinbox">
+        <property name="minimum">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <number>512</number>
+        </property>
+        <property name="value">
+         <number>32</number>
         </property>
        </widget>
       </item>

@@ -19,7 +19,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QGridLayout,
     QLabel, QLineEdit, QMainWindow, QMenu,
     QMenuBar, QPushButton, QSizePolicy, QSlider,
-    QStatusBar, QWidget)
+    QSpinBox, QStatusBar, QWidget)
 
 class Ui_main_window(object):
     def setupUi(self, main_window):
@@ -129,12 +129,6 @@ class Ui_main_window(object):
 
         self.formLayout.setWidget(10, QFormLayout.LabelRole, self.epochs_label)
 
-        self.epochs_number = QLabel(self.central_widget)
-        self.epochs_number.setObjectName(u"epochs_number")
-        self.epochs_number.setMinimumSize(QSize(40, 0))
-
-        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.epochs_number)
-
         self.epochs_slider = QSlider(self.central_widget)
         self.epochs_slider.setObjectName(u"epochs_slider")
         self.epochs_slider.setMinimumSize(QSize(0, 0))
@@ -151,18 +145,13 @@ class Ui_main_window(object):
 
         self.formLayout.setWidget(12, QFormLayout.LabelRole, self.batchsize_label)
 
-        self.batchsize_number = QLabel(self.central_widget)
-        self.batchsize_number.setObjectName(u"batchsize_number")
-
-        self.formLayout.setWidget(12, QFormLayout.FieldRole, self.batchsize_number)
-
         self.batchsize_slider = QSlider(self.central_widget)
         self.batchsize_slider.setObjectName(u"batchsize_slider")
         self.batchsize_slider.setMinimumSize(QSize(0, 0))
-        self.batchsize_slider.setMinimum(1)
-        self.batchsize_slider.setMaximum(120)
+        self.batchsize_slider.setMinimum(2)
+        self.batchsize_slider.setMaximum(512)
         self.batchsize_slider.setSingleStep(1)
-        self.batchsize_slider.setValue(60)
+        self.batchsize_slider.setValue(32)
         self.batchsize_slider.setOrientation(Qt.Horizontal)
 
         self.formLayout.setWidget(13, QFormLayout.SpanningRole, self.batchsize_slider)
@@ -172,6 +161,23 @@ class Ui_main_window(object):
         self.component_dropdown.setEditable(True)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.component_dropdown)
+
+        self.epochs_spinbox = QSpinBox(self.central_widget)
+        self.epochs_spinbox.setObjectName(u"epochs_spinbox")
+        self.epochs_spinbox.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.epochs_spinbox.setMinimum(1)
+        self.epochs_spinbox.setMaximum(20000)
+        self.epochs_spinbox.setValue(10000)
+
+        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.epochs_spinbox)
+
+        self.batchsize_spinbox = QSpinBox(self.central_widget)
+        self.batchsize_spinbox.setObjectName(u"batchsize_spinbox")
+        self.batchsize_spinbox.setMinimum(2)
+        self.batchsize_spinbox.setMaximum(512)
+        self.batchsize_spinbox.setValue(32)
+
+        self.formLayout.setWidget(12, QFormLayout.FieldRole, self.batchsize_spinbox)
 
 
         self.gridLayout.addLayout(self.formLayout, 0, 0, 1, 2)
@@ -228,9 +234,7 @@ class Ui_main_window(object):
         self.target_button.setText(QCoreApplication.translate("main_window", u"Browse", None))
         self.target_dir_label.setText(QCoreApplication.translate("main_window", u"No folder selected", None))
         self.epochs_label.setText(QCoreApplication.translate("main_window", u"Epochs", None))
-        self.epochs_number.setText(QCoreApplication.translate("main_window", u"10000", None))
         self.batchsize_label.setText(QCoreApplication.translate("main_window", u"Batch Size", None))
-        self.batchsize_number.setText(QCoreApplication.translate("main_window", u"60", None))
         self.menuFile.setTitle(QCoreApplication.translate("main_window", u"File", None))
         self.menuMode.setTitle(QCoreApplication.translate("main_window", u"Mode", None))
         self.menuExit.setTitle(QCoreApplication.translate("main_window", u"Exit", None))

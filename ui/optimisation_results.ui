@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Optimisatoin Results</string>
+   <string>Optimisation Results</string>
   </property>
   <widget class="QWidget" name="central_widget">
    <property name="enabled">
@@ -41,6 +41,31 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
+      <item row="3" column="0">
+       <widget class="QSlider" name="num_design_slider">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="load_results_button">
         <property name="enabled">
@@ -51,7 +76,17 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2" rowspan="5">
+      <item row="0" column="3" rowspan="7">
+       <widget class="GraphicsLayoutWidget" name="GraphicsLayoutWidget" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>120</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="7">
        <widget class="GLViewWidget" name="main_view" native="true">
         <property name="enabled">
          <bool>true</bool>
@@ -60,16 +95,6 @@
          <size>
           <width>300</width>
           <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3" rowspan="5">
-       <widget class="GraphicsLayoutWidget" name="GraphicsLayoutWidget" native="true">
-        <property name="maximumSize">
-         <size>
-          <width>120</width>
-          <height>16777215</height>
          </size>
         </property>
        </widget>
@@ -103,32 +128,10 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QSlider" name="num_design_slider">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>300</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>100</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <layout class="QFormLayout" name="formLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
+         <enum>QLayout::SetMinimumSize</enum>
         </property>
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
@@ -174,6 +177,87 @@
           </property>
           <property name="text">
            <string>Refresh Mesh</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="variables_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Optimised Variables</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Blank Holding Force</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Friction Coefficient</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Thickness</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Clearance</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="bhf_value">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="friction_value">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="clearance_value">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLabel" name="thickness_value">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>563</height>
+    <width>584</width>
+    <height>624</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,9 @@
     </property>
     <item row="1" column="0" colspan="2">
      <layout class="QFormLayout" name="formLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
       </property>
@@ -85,7 +88,7 @@
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="thinning_label">
+       <widget class="QLabel" name="indicator_label">
         <property name="text">
          <string>Thinning Model</string>
         </property>
@@ -99,7 +102,7 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QProgressBar" name="thinning_progressbar">
+       <widget class="QProgressBar" name="indicator_progressbar">
         <property name="value">
          <number>0</number>
         </property>
@@ -115,7 +118,11 @@
      </widget>
     </item>
     <item row="4" column="0" colspan="2">
-     <layout class="QGridLayout" name="grid"/>
+     <layout class="QGridLayout" name="grid">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+     </layout>
     </item>
     <item row="5" column="1">
      <widget class="QPushButton" name="done_button">

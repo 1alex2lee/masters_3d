@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1246</width>
+    <width>1269</width>
     <height>895</height>
    </rect>
   </property>
@@ -41,8 +41,48 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="indicator_dropdown"/>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="component_dropdown">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="process_label">
+        <property name="text">
+         <string>Process</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label4">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QSlider" name="slider3">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>110</number>
+        </property>
+        <property name="maximum">
+         <number>149</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="material_label">
@@ -51,8 +91,37 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="material_dropdown">
+      <item row="3" column="1">
+       <widget class="QComboBox" name="indicator_dropdown">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QSlider" name="slider4">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>51</number>
+        </property>
+        <property name="maximum">
+         <number>299</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="process_dropdown">
         <property name="maximumSize">
          <size>
           <width>200</width>
@@ -66,12 +135,62 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="process_label">
+      <item row="5" column="0" colspan="2">
+       <widget class="QPushButton" name="load_mesh_button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
-         <string>Process</string>
+         <string>Load New Mesh</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QSlider" name="slider2">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>10</number>
+        </property>
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLabel" name="label_description">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -91,16 +210,6 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QPushButton" name="load_mesh_button">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Load New Mesh</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="indicator_label">
         <property name="maximumSize">
@@ -114,24 +223,36 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="process_dropdown">
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_heading">
         <property name="maximumSize">
          <size>
-          <width>200</width>
-          <height>16777215</height>
+          <width>150</width>
+          <height>200</height>
          </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../../../../../.designer/backup/cardoorpanel_blank_explanation.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="6" column="0" colspan="2">
-       <widget class="QTreeView" name="dir_tree">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="material_dropdown">
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>200</width>
           <height>16777215</height>
          </size>
         </property>
@@ -144,10 +265,59 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="component_dropdown"/>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label3">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="2" rowspan="7">
+      <item row="8" column="0">
+       <widget class="QLabel" name="label2">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label1">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QSlider" name="slider1">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="minimum">
+         <number>520</number>
+        </property>
+        <property name="maximum">
+         <number>5900</number>
+        </property>
+        <property name="pageStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>2500</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="11">
        <widget class="GLViewWidget" name="main_view" native="true">
         <property name="enabled">
          <bool>true</bool>
@@ -160,7 +330,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3" rowspan="7">
+      <item row="0" column="3" rowspan="11">
        <widget class="GraphicsLayoutWidget" name="GraphicsLayoutWidget" native="true">
         <property name="maximumSize">
          <size>

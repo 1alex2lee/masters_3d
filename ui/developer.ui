@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>777</width>
-    <height>532</height>
+    <width>495</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,20 +36,10 @@
     <property name="bottomMargin">
      <number>10</number>
     </property>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
+    <item row="2" column="0">
+     <widget class="QPushButton" name="train_new_button">
       <property name="text">
-       <string>Current Models</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="delete_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Delete</string>
+       <string>Train New</string>
       </property>
      </widget>
     </item>
@@ -63,6 +53,18 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0" colspan="4">
+     <widget class="QTreeWidget" name="model_tree">
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <column>
+       <property name="text">
+        <string>Current Models</string>
+       </property>
+      </column>
+     </widget>
+    </item>
     <item row="2" column="3">
      <widget class="QPushButton" name="import_button">
       <property name="enabled">
@@ -73,23 +75,14 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="train_new_button">
-      <property name="text">
-       <string>Train New</string>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="delete_button">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QTableView" name="model_table"/>
-    </item>
-    <item row="1" column="2" colspan="2">
-     <widget class="QTreeWidget" name="model_tree">
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
+      <property name="text">
+       <string>Delete</string>
+      </property>
      </widget>
     </item>
    </layout>

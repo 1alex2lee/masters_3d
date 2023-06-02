@@ -16,16 +16,15 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLabel,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QStatusBar, QTableView, QTreeWidget,
-    QTreeWidgetItem, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QMainWindow,
+    QMenu, QMenuBar, QPushButton, QSizePolicy,
+    QStatusBar, QTreeWidget, QTreeWidgetItem, QWidget)
 
 class Ui_main_window(object):
     def setupUi(self, main_window):
         if not main_window.objectName():
             main_window.setObjectName(u"main_window")
-        main_window.resize(777, 532)
+        main_window.resize(495, 524)
         self.actionImport_New_Mesh = QAction(main_window)
         self.actionImport_New_Mesh.setObjectName(u"actionImport_New_Mesh")
         self.action_newoptimisation = QAction(main_window)
@@ -47,16 +46,10 @@ class Ui_main_window(object):
         self.gridLayout_2 = QGridLayout(self.central_widget)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(10, 10, 10, 10)
-        self.label = QLabel(self.central_widget)
-        self.label.setObjectName(u"label")
+        self.train_new_button = QPushButton(self.central_widget)
+        self.train_new_button.setObjectName(u"train_new_button")
 
-        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
-
-        self.delete_button = QPushButton(self.central_widget)
-        self.delete_button.setObjectName(u"delete_button")
-        self.delete_button.setEnabled(False)
-
-        self.gridLayout_2.addWidget(self.delete_button, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.train_new_button, 2, 0, 1, 1)
 
         self.export_button = QPushButton(self.central_widget)
         self.export_button.setObjectName(u"export_button")
@@ -64,29 +57,23 @@ class Ui_main_window(object):
 
         self.gridLayout_2.addWidget(self.export_button, 2, 2, 1, 1)
 
+        self.model_tree = QTreeWidget(self.central_widget)
+        self.model_tree.setObjectName(u"model_tree")
+        self.model_tree.setColumnCount(1)
+
+        self.gridLayout_2.addWidget(self.model_tree, 1, 0, 1, 4)
+
         self.import_button = QPushButton(self.central_widget)
         self.import_button.setObjectName(u"import_button")
         self.import_button.setEnabled(False)
 
         self.gridLayout_2.addWidget(self.import_button, 2, 3, 1, 1)
 
-        self.train_new_button = QPushButton(self.central_widget)
-        self.train_new_button.setObjectName(u"train_new_button")
+        self.delete_button = QPushButton(self.central_widget)
+        self.delete_button.setObjectName(u"delete_button")
+        self.delete_button.setEnabled(False)
 
-        self.gridLayout_2.addWidget(self.train_new_button, 2, 0, 1, 1)
-
-        self.model_table = QTableView(self.central_widget)
-        self.model_table.setObjectName(u"model_table")
-
-        self.gridLayout_2.addWidget(self.model_table, 1, 0, 1, 2)
-
-        self.model_tree = QTreeWidget(self.central_widget)
-        __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
-        self.model_tree.setHeaderItem(__qtreewidgetitem)
-        self.model_tree.setObjectName(u"model_tree")
-
-        self.gridLayout_2.addWidget(self.model_tree, 1, 2, 1, 2)
+        self.gridLayout_2.addWidget(self.delete_button, 2, 1, 1, 1)
 
         main_window.setCentralWidget(self.central_widget)
         self.statusbar = QStatusBar(main_window)
@@ -128,11 +115,12 @@ class Ui_main_window(object):
         self.actionExit.setText(QCoreApplication.translate("main_window", u"Exit", None))
         self.action_optimisation.setText(QCoreApplication.translate("main_window", u"Optimisation Workspace", None))
         self.action_prediction.setText(QCoreApplication.translate("main_window", u"Prediction", None))
-        self.label.setText(QCoreApplication.translate("main_window", u"Current Models", None))
-        self.delete_button.setText(QCoreApplication.translate("main_window", u"Delete", None))
-        self.export_button.setText(QCoreApplication.translate("main_window", u"Export", None))
-        self.import_button.setText(QCoreApplication.translate("main_window", u"Import", None))
         self.train_new_button.setText(QCoreApplication.translate("main_window", u"Train New", None))
+        self.export_button.setText(QCoreApplication.translate("main_window", u"Export", None))
+        ___qtreewidgetitem = self.model_tree.headerItem()
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("main_window", u"Current Models", None));
+        self.import_button.setText(QCoreApplication.translate("main_window", u"Import", None))
+        self.delete_button.setText(QCoreApplication.translate("main_window", u"Delete", None))
         self.menuMode.setTitle(QCoreApplication.translate("main_window", u"Mode", None))
         self.menuExit.setTitle(QCoreApplication.translate("main_window", u"Exit", None))
     # retranslateUi
