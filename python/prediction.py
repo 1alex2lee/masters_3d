@@ -136,60 +136,39 @@ def add_items (ax, gw, window):
 
 def plot_displacement (window):
     global o3dmesh, die_shape, disp, data_colours
+
+    def get_displacement_data_colours (disp_field, dir):
+        disp_field = np.transpose(disp_field)
+        plt.imsave("temp/cardoorpanel_disp.png", disp_field)
+        disp_min, disp_max = np.amin(disp_field), np.amax(disp_field)
+        o3dpoints = np.asarray(o3dmesh.vertices)
+        x_max, x_min = np.amax(o3dpoints[:,0]), np.amin(o3dpoints[:,0])
+        y_max, y_min = np.amax(o3dpoints[:,1]), np.amin(o3dpoints[:,1])
+        field_x, field_y = disp_field.shape[0], disp_field.shape[1]
+        data_colours = []
+        # o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
+        for idx in range(o3dpoints.shape[0]):
+            x = math.floor((o3dpoints[idx, 0] - x_min)/(x_max-x_min) * (field_x-1))
+            y = math.floor((o3dpoints[idx, 1] - y_min)/(y_max-y_min) * (field_y-1))
+            data_colours.append(disp_field[x, y])
+        data_colours = np.array(data_colours)
+        data_colours -= np.min(data_colours)
+        data_colours /= np.max(data_colours)
+        ax = AxisItem("left")
+        ax.setLabel(text=f"{dir} Displacement", units="mm")
+        ax.setRange(disp_min, disp_max)
+        return data_colours, ax
+    
     selected_direction = window.direction_dropdown.currentText()
     if die_shape != []:
         if selected_direction == "X":
-            disp_min, disp_max = np.amin(disp[0]), np.amax(disp[0])
-            o3dpoints = np.asarray(o3dmesh.vertices)
-            data_colours = []
-            o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
-            for point in o3dpoints:
-                y = round(point[0]/o3dpointx_max[0] * 383)
-                x = round(point[1]/o3dpointx_max[1] * 255)
-                data_colours.append((disp[0, x, y] - disp_min)/(disp_max - disp_min))
-            ax = AxisItem("left")
-            ax.setLabel(text="X Displacement", units="mm")
-            ax.setRange(disp_min, disp_max)
-
-        elif selected_direction == "Y":
-            disp_min, disp_max = np.amin(disp[1]), np.amax(disp[1])
-            o3dpoints = np.asarray(o3dmesh.vertices)
-            data_colours = []
-            o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
-            for point in o3dpoints:
-                y = round(point[0]/o3dpointx_max[0] * 383)
-                x = round(point[1]/o3dpointx_max[1] * 255)
-                data_colours.append((disp[1, x, y] - disp_min)/(disp_max - disp_min))
-            ax = AxisItem("left")
-            ax.setLabel(text="Y Displacement", units="mm")
-            ax.setRange(disp_min, disp_max)
-
-        elif selected_direction == "Z":
-            disp_min, disp_max = np.amin(disp[2]), np.amax(disp[2])
-            o3dpoints = np.asarray(o3dmesh.vertices)
-            data_colours = []
-            o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
-            for point in o3dpoints:
-                y = round(point[0]/o3dpointx_max[0] * 383)
-                x = round(point[1]/o3dpointx_max[1] * 255)
-                data_colours.append((disp[2, x, y] - disp_min)/(disp_max - disp_min))
-            ax = AxisItem("left")
-            ax.setLabel(text="Z Displacement", units="mm")
-            ax.setRange(disp_min, disp_max)
-
-        else:
-            disp_total = np.sum(disp, axis=0)
-            disp_min, disp_max = np.amin(disp_total), np.amax(disp_total)
-            o3dpoints = np.asarray(o3dmesh.vertices)
-            data_colours = []
-            o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
-            for point in o3dpoints:
-                y = round(point[0]/o3dpointx_max[0] * 383)
-                x = round(point[1]/o3dpointx_max[1] * 255)
-                data_colours.append((disp_total[x, y] - disp_min)/(disp_max - disp_min))
-            ax = AxisItem("left")
-            ax.setLabel(text="Total Displacement", units="mm")
-            ax.setRange(disp_min, disp_max)
+            data_colours, ax = get_displacement_data_colours(disp[0,:,:], selected_direction)
+        if selected_direction == "Y":
+            data_colours, ax = get_displacement_data_colours(disp[1,:,:], selected_direction)
+        if selected_direction == "Z":
+            data_colours, ax = get_displacement_data_colours(disp[2,:,:], selected_direction)
+        if selected_direction == "Total":
+            data_colours, ax = get_displacement_data_colours(np.sum(disp, axis=0), selected_direction)
 
         gw = GradientEditorItem(orientation="right")
         GradientMode = {'ticks': [(0, (0,0,255,255)), (0.5, (0,255,0,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
@@ -210,40 +189,60 @@ def plot_thinning (window):
     input[4,:,:] = blank_shape
     # predict using model
     pred = model_control.predict(input)
-    thinning = pred[0,:] * 100
+    thinning_field = pred[0,:] * 100
     # thinning -= thinning.min()
 
-    np.save("temp/input.npy", input)
-    np.save("temp/thinning.npy", pred)
-
-    thinning_max = np.amax(thinning)
-    thinning_min = np.amin(thinning)
-    data_colours = []
-
+    thinning_field = np.transpose(thinning_field)
+    thinning_min, thinning_max = np.amin(thinning_field), np.amax(thinning_field)
     o3dpoints = np.asarray(o3dmesh.vertices)
-    o3dpoints[:,0] -= np.min(o3dpoints[:,0])
-    o3dpoints[:,1] -= np.min(o3dpoints[:,1])
-    o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
-
-    for point in o3dpoints:
-        x = math.floor(point[0]/o3dpointx_max[0] * (thinning.shape[0] - 1))
-        y = math.floor(point[1]/o3dpointx_max[1] * (thinning.shape[1] - 1))
-        # if x == 383:
-        #     for i in range(8):
-        #         data_colours.append(0)
-        # elif y == 255:
-        #     for i in range(20):
-        #         data_colours.append(0)
-        # else:
-            # data_colours.append((thinning[x, y] - thinning_min)/(thinning_max - thinning_min))
-        data_colours.append(thinning[x, y])
+    x_max, x_min = np.amax(o3dpoints[:,0]), np.amin(o3dpoints[:,0])
+    y_max, y_min = np.amax(o3dpoints[:,1]), np.amin(o3dpoints[:,1])
+    field_x, field_y = thinning_field.shape[0], thinning_field.shape[1]
+    data_colours = []
+    # o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
+    for idx in range(o3dpoints.shape[0]):
+        x = math.floor((o3dpoints[idx, 0] - x_min)/(x_max-x_min) * (field_x-1))
+        y = math.floor((o3dpoints[idx, 1] - y_min)/(y_max-y_min) * (field_y-1))
+        data_colours.append(thinning_field[x, y])
     data_colours = np.array(data_colours)
-    data_colours -+ np.amin(data_colours)
+    data_colours -= np.min(data_colours)
+    data_colours /= np.max(data_colours)
     ax = AxisItem("left")
-    ax.setLabel(text="Thinning (%)")
-    ax.setRange(np.amin(data_colours), np.amax(data_colours))
-    
+    ax.setLabel(text="Thinning", units="%")
+    ax.setRange(thinning_min, thinning_max)
+
     gw = GradientEditorItem(orientation="right")
     GradientMode = {'ticks': [(0, (0,0,255,255)), (0.5, (0,255,0,255)), (1, (255,0,0,255))], 'mode': 'rgb'}
     gw.restoreState(GradientMode)
     add_items(ax, gw, window)
+    
+    # np.save("temp/input.npy", input)
+    # np.save("temp/thinning.npy", pred)
+
+    # thinning_max = np.amax(thinning)
+    # thinning_min = np.amin(thinning)
+    # data_colours = []
+
+    # o3dpoints = np.asarray(o3dmesh.vertices)
+    # o3dpoints[:,0] -= np.min(o3dpoints[:,0])
+    # o3dpoints[:,1] -= np.min(o3dpoints[:,1])
+    # o3dpointx_max = [np.max(o3dpoints[:,0]), np.max(o3dpoints[:,1])]
+
+    # for point in o3dpoints:
+    #     x = math.floor(point[0]/o3dpointx_max[0] * (thinning.shape[0] - 1))
+    #     y = math.floor(point[1]/o3dpointx_max[1] * (thinning.shape[1] - 1))
+    #     # if x == 383:
+    #     #     for i in range(8):
+    #     #         data_colours.append(0)
+    #     # elif y == 255:
+    #     #     for i in range(20):
+    #     #         data_colours.append(0)
+    #     # else:
+    #         # data_colours.append((thinning[x, y] - thinning_min)/(thinning_max - thinning_min))
+    #     data_colours.append(thinning[x, y])
+    # data_colours = np.array(data_colours)
+    # data_colours -+ np.amin(data_colours)
+    # ax = AxisItem("left")
+    # ax.setLabel(text="Thinning (%)")
+    # ax.setRange(np.amin(data_colours), np.amax(data_colours))
+    

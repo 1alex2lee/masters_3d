@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import time
 import torch
 import matplotlib.pyplot as plt
 import open3d as o3d
@@ -54,6 +55,7 @@ def ubending_thinning (verts, faces, window, bhf=32.1, friction=0.16, clearance=
     # print(o3dverts.shape)
     # print(o3dtriangles.shape)
 
+    tic = time.perf_counter()
     thinningField = thinningField.squeeze().detach().cpu().clone()
     thinningField *= 100
     thinning_max = thinningField.max()
@@ -65,9 +67,9 @@ def ubending_thinning (verts, faces, window, bhf=32.1, friction=0.16, clearance=
 
     verts_max = [np.max(o3dverts[:,0]), np.max(o3dverts[:,1])]
     # clipped_verts = np.array([])
-    clipped_verts = []
+    # clipped_verts = []
     # clipped_trianges = np.array()
-    indicies_kept = np.array([])
+    # indicies_kept = np.array([])
     for idx in range(o3dverts.shape[0]):
     # for idx, point in enumerate(o3dverts):
         point = o3dverts[idx,:]
@@ -75,7 +77,13 @@ def ubending_thinning (verts, faces, window, bhf=32.1, friction=0.16, clearance=
         x = round(point[1]/verts_max[1] * 255)
         # data_colours.append((thinningField[x, y] - thinning_min)/thinning_max)
         data_colours.append(thinningField[x, y])
+    data_colours = np.array(data_colours)
+    # data_colours -= np.min(data_colours)
+    # data_colours /= np.max(data_colours)
+    toc = time.perf_counter()
+    print(f"data colours took {toc - tic:0.4f} seconds")
 
+    tic = time.perf_counter()
     ax = AxisItem("left")
     ax.setLabel(text="Thinning (%)")
     ax.setRange(thinning_min, thinning_max)
@@ -88,6 +96,8 @@ def ubending_thinning (verts, faces, window, bhf=32.1, friction=0.16, clearance=
     # gw.setFont(font)
 
     add_items(o3dmesh.vertices, o3dmesh.triangles, ax, gw, data_colours, window)
+    toc = time.perf_counter()
+    print(f"plot surface took {toc - tic:0.4f} seconds")
 
 #####################################################################################################################################################
     
@@ -97,16 +107,16 @@ def ubending_displacement (verts, faces, window, bhf=32.1, friction=0.16, cleara
     thinningField, totalDisplacementField, o3dmesh, o3dverts = get_fields_and_points(verts, faces, bhf, friction, clearance, thickness)
 
     # Get the displacement vectors as images
-    print(totalDisplacementField.shape)
+    # print(totalDisplacementField.shape)
     displacement_x = totalDisplacementField[0,...].detach().numpy()
     displacement_y = totalDisplacementField[1,...].detach().numpy()
     displacement_z = totalDisplacementField[2,...].detach().numpy()
     displacement_total = np.add(displacement_x, displacement_y, displacement_z)
-    print(totalDisplacementField.max(), totalDisplacementField.min())
-    print(np.amax(displacement_x), np.amin(displacement_x))
-    print(np.amax(displacement_y), np.amin(displacement_y))
-    print(np.amax(displacement_z), np.amin(displacement_z))
-    print(np.amax(displacement_total), np.amin(displacement_total))
+    # print(totalDisplacementField.max(), totalDisplacementField.min())
+    # print(np.amax(displacement_x), np.amin(displacement_x))
+    # print(np.amax(displacement_y), np.amin(displacement_y))
+    # print(np.amax(displacement_z), np.amin(displacement_z))
+    # print(np.amax(displacement_total), np.amin(displacement_total))
     # print(displacement_x.max, displacement_y.min)
     # print(np.amax(displacement_x), np.amin(displacement_y))
 
@@ -120,18 +130,28 @@ def ubending_displacement (verts, faces, window, bhf=32.1, friction=0.16, cleara
     # verts[:,0] -= np.min(verts[:,0]) 
     # verts[:,1] -= np.min(verts[:,1]) 
     # verts_max = [np.max(verts[:,0]), np.max(verts[:,1])]
-    x_max, y_max = np.amax(verts[:,1]), np.amax(verts[:,0])
+    x_max, x_min = np.amax(verts[:,0]), np.amin(verts[:,0])
+    y_max, y_min = np.amax(verts[:,1]), np.amin(verts[:,1])
+    # z_max, z_min = np.amax(verts[:,2]), np.amin(verts[:,2])
+    # print("x coords", x_max, x_min)
+    # print("y coords", y_max, y_min)
+    # print("z coords", z_max, z_min)
     
     def get_diaplacement_colourmap(displacement_field, dir):
-        # displacement_max = np.amax(displacement_field)
-        # displacement_min = np.amin(displacement_field)
+        displacement_field = np.transpose(displacement_field)
+        # plt.imsave("temp/displacement_field.png", displacement_field)
+        displacement_max, displacement_min = np.amax(displacement_field), np.amin(displacement_field)
+        field_x, field_y = displacement_field.shape[0], displacement_field.shape[1]
+        # print("field dimensions", field_x, field_y)
         data_colours = []
         # below_minus50 = 0
-        for idx in range(o3dverts.shape[0]):
+        for idx in range(verts.shape[0]):
         # for idx, point in enumerate(o3dverts):
-            point = o3dverts[idx,:]
-            y = round((point[0]/y_max) * (displacement_field.shape[1] - 1))
-            x = round((point[1]/x_max) * (displacement_field.shape[0] - 1))
+            # point = verts[idx,:]
+            # y = round((point[0]/y_max) * (displacement_field.shape[1] - 1))
+            # x = round((point[1]/x_max) * (displacement_field.shape[0] - 1))
+            x = math.floor((verts[idx, 0] - x_min)/x_max * field_x)
+            y = math.floor((verts[idx, 1] - y_min)/y_max * field_y)
             # data_colours.append((displacement_field[x, y] - displacement_min)/displacement_max)
             colour_value = displacement_field[x, y]
             data_colours.append(colour_value)
@@ -141,7 +161,8 @@ def ubending_displacement (verts, faces, window, bhf=32.1, friction=0.16, cleara
             #     below_minus50 += 1
         # print("amount below -50", below_minus50)
         data_colours = np.array(data_colours)
-        data_colours -= np.amin(data_colours)
+        data_colours -= np.min(data_colours)
+        data_colours /= np.max(data_colours)
         # print("total length", data_colours.shape)
         # print("verts length", o3dverts.shape)
         # print(np.max(data_colours), displacement_max)
@@ -152,7 +173,7 @@ def ubending_displacement (verts, faces, window, bhf=32.1, friction=0.16, cleara
         #     data_colours.append((displacement_field[x, y] - displacement_min)/displacement_max)
         ax = AxisItem("left")
         ax.setLabel(text=f"{dir} Displacement (mm)")
-        ax.setRange(np.min(data_colours), np.max(data_colours))
+        ax.setRange(displacement_min, displacement_max)
         return data_colours, ax
     
     if direction == "X":
@@ -182,6 +203,7 @@ def ubending_displacement (verts, faces, window, bhf=32.1, friction=0.16, cleara
 #####################################################################################################################################################
 
 def get_fields_and_points(verts, faces, BHF, friction, clearance, thickness):
+    tic = time.perf_counter()
     batch_size = 4
     num_channel_thinning = (np.array([4,8,16,32,64,128,256,512])).astype(np.int64)
     num_channel_displacement = (np.array([4,8,16,32,64,128,256,512])).astype(np.int64)
@@ -314,13 +336,18 @@ def get_fields_and_points(verts, faces, BHF, friction, clearance, thickness):
     surrogateModelInput[:, 3, :, :] = friction * gridOfOnes #friction
     surrogateModelInput[:, 4, :, :] = clearance * gridOfOnes #clearance
     surrogateModelInput[:, 5, :, :] = thickness * gridOfOnes #thickness
-
+    toc = time.perf_counter()
+    print(f"model input prep took {toc - tic:0.4f} seconds")
     #-------------------------------------------------------------------------------------
     #2.1: Using NN3, calculate manufacturing performance
     #-------------------------------------------------------------------------------------
+    tic = time.perf_counter()
     thinningField = thinningModel(surrogateModelInput)[..., :-10]
     totalDisplacementField = displacementModel(surrogateModelInput).squeeze() #total displacement
+    toc = time.perf_counter()
+    print(f"model predicitons took {toc - tic:0.4f} seconds")
     # postStampingAndSpringbackGeometryPositions = displacementsToPositions(totalDisplacementField)[..., :-10] #deformed positions
+    tic = time.perf_counter()
     postStampingAndSpringbackGeometryPositions = displacementsToPositions(totalDisplacementField) #deformed positions
     # print(postStampingAndSpringbackGeometryPositions.shape)
     # print(x_coords_deformedComponent.shape)
@@ -351,10 +378,20 @@ def get_fields_and_points(verts, faces, BHF, friction, clearance, thickness):
     # point_cloud = torch.stack((x_coords_deformedComponent, y_coords_deformedComponent, z_coords_deformedComponent), dim=0)
     # point_cloud = np.transpose(point_cloud.detach().numpy())
     # print(point_cloud.shape)
+    # print(np.max(postStampingAndSpringbackGeometryPositions[:, 1]), np.min(postStampingAndSpringbackGeometryPositions[:, 1]))
+    # print(np.max(postStampingAndSpringbackGeometryPositions[:, 2]), np.min(postStampingAndSpringbackGeometryPositions[:, 2]))
+    # mask = np.logical_and(postStampingAndSpringbackGeometryPositions[:, 0] >= 10, postStampingAndSpringbackGeometryPositions[:, 0] <= 70)
+    # mask = np.logical_and(postStampingAndSpringbackGeometryPositions[:, 0] >= 10,
+    #                   np.logical_and(postStampingAndSpringbackGeometryPositions[:, 0] <= 70,
+    #                                  postStampingAndSpringbackGeometryPositions[:, 2] >= -65))
+    # mask = np.all([postStampingAndSpringbackGeometryPositions[:, 0] >= 10,
+    #     postStampingAndSpringbackGeometryPositions[:, 0] <= 70], axis=0)
+        # postStampingAndSpringbackGeometryPositions[:, 1] <= 65], axis=0)
+    # postStampingAndSpringbackGeometryPositions = postStampingAndSpringbackGeometryPositions[mask]
+    toc = time.perf_counter()
+    print(f"applying displacement took {toc - tic:0.4f} seconds")
 
-    mask = np.logical_and(postStampingAndSpringbackGeometryPositions[:, 0] >= 10, postStampingAndSpringbackGeometryPositions[:, 0] <= 70)
-    postStampingAndSpringbackGeometryPositions = postStampingAndSpringbackGeometryPositions[mask]
-
+    tic = time.perf_counter()
     # Use Open3D to plot smooth surface
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(postStampingAndSpringbackGeometryPositions)
@@ -362,6 +399,10 @@ def get_fields_and_points(verts, faces, BHF, friction, clearance, thickness):
     pcd.normals =  o3d.utility.Vector3dVector(np.zeros((1,3)))
     pcd.estimate_normals()
     o3dmesh, densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(pcd, depth=9)
+    # o3dmesh = o3dmesh.clip_plane(point=[10,0,0], normal=[1,0,0])
+    # o3dmesh = o3dmesh.clip_plane(point=[70,0,0], normal=[-1,0,0])
+    # o3dmesh = o3dmesh.clip_plane(point=[0,65,0], normal=[0,-1,0])
+    o3dmesh = o3dmesh.crop(o3d.geometry.AxisAlignedBoundingBox(min_bound=np.array([0,10,float("-inf")]) , max_bound=np.array([70,70,float("inf")])))
     # tetra_mesh, pt_map = o3d.geometry.TetraMesh.create_from_point_cloud(pcd)
     # alpha = 0.03
     # o3dmesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(pcd, alpha, tetra_mesh, pt_map)
@@ -370,6 +411,8 @@ def get_fields_and_points(verts, faces, BHF, friction, clearance, thickness):
     # o3dmesh = o3d.geometry.TriangleMesh.create_from_point_cloud_ball_pivoting(pcd, o3d.utility.DoubleVector(radii))
     o3dverts = np.asarray(o3dmesh.vertices)
     o3dtriangles = np.asarray(o3dmesh.triangles)
+    toc = time.perf_counter()
+    print(f"surface reconstruction took {toc - tic:0.4f} seconds")
     return thinningField,totalDisplacementField,o3dmesh,o3dverts
 
 

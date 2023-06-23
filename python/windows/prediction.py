@@ -10,6 +10,8 @@ from pyqtgraph import ColorBarItem, ColorMap, AxisItem
 
 from stl import mesh
 import numpy as np
+import time
+import trimesh
 
 from python import load, model_control, prediction
 from python.windows import developer, optimisation_results, optimisation_setup, sensitivity
@@ -171,9 +173,26 @@ class Window(QMainWindow):
         if self.file != "":
             component = self.component_dropdown.currentText()
             if "bulkhead" in component.lower() or "u-bending" in component.lower():
-                self.points, self.normals, self.offsurface_points = surface_points_normals.generate(self.file, self)
-                self.best_latent_vector = autodecoder.get_latent_vector(self.points, self.normals, self.offsurface_points, self, component)
-                self.verts, self.faces = autodecoder.get_verts_faces(self.best_latent_vector, self, component)
+                # tic = time.perf_counter()
+                # self.points, self.normals, self.offsurface_points = surface_points_normals.generate(self.file, self)
+                # toc = time.perf_counter()
+                # print(f"generate points and normals took {toc-tic:0.4f} seconds")
+                # tic = time.perf_counter()
+                # self.best_latent_vector = autodecoder.get_latent_vector(self.points, self.normals, self.offsurface_points, self, component)
+                # toc = time.perf_counter()
+                # print(f"autodecoder get latent vector took {toc-tic:0.4f} seconds")
+                # tic = time.perf_counter()
+                # self.verts, self.faces = autodecoder.get_verts_faces(self.best_latent_vector, self, component)
+                # toc = time.perf_counter()
+                # print(f"autodecoder get verts faces took {toc-tic:0.4f} seconds")
+                tic = time.perf_counter()
+                # load mesh (STL CAD File)
+                mesh = trimesh.load_mesh(self.file, force='mesh')
+                # fix mesh if normals are not pointing "up"
+                trimesh.repair.fix_inversion(mesh)
+                self.verts, self.faces = mesh.vertices, mesh.faces
+                toc = time.perf_counter()
+                print(f"load STL took {toc-tic:0.4f} seconds")
             self.load_mesh()
 
     def load_mesh (self):

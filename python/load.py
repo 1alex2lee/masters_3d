@@ -23,11 +23,12 @@ def materials (component, process):
 
 
 def indicators (component, process, material):
-    # if "car door panel" in component.lower():
-    #     return ["Displacement (mm)"]
+    if "car door panel" in component.lower():
+        return ["Displacement (mm)"]
     # if "u-bending" in component.lower():
     #     return ["Thinning (%)","Displacement (mm)"]
-    return [ indicator for indicator in os.listdir(os.path.join("components", component, process, material)) if indicator[0] != "." ]
+    else:
+        return [ indicator for indicator in os.listdir(os.path.join("components", component, process, material)) if indicator[0] != "." ]
 
 
 
